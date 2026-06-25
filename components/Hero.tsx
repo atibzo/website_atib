@@ -25,7 +25,7 @@ export default function Hero() {
           {/* auspicious mark */}
           <div className="flex justify-center">
             <Image
-              src="/decor/ganesha.svg"
+              src={invitation.emblem}
               alt="Auspicious mark"
               width={96}
               height={96}
@@ -33,13 +33,18 @@ export default function Hero() {
             />
           </div>
 
-          {/* shloka */}
-          <div className="mt-5 text-center font-deva text-sanskrit">
-            {invitation.shloka.map((line, i) => (
-              <p key={i} className="text-sm leading-relaxed tracking-wide sm:text-base">
-                {line}
-              </p>
-            ))}
+          {/* Bismillah invocation */}
+          <div className="mt-5 text-center text-sanskrit">
+            <p
+              dir="rtl"
+              lang="ar"
+              className="font-arabic text-2xl leading-relaxed sm:text-3xl"
+            >
+              {invitation.invocationArabic}
+            </p>
+            <p className="mt-2 font-serif text-xs italic tracking-wide text-ink-soft sm:text-sm">
+              {invitation.invocationMeaning}
+            </p>
           </div>
 
           {/* blessing */}
@@ -113,9 +118,11 @@ function NameBlock({
         {name}
       </h2>
       <p className="mt-2 font-serif text-sm text-ink sm:text-base">{parents}</p>
-      <p className="font-serif text-xs italic text-ink-soft sm:text-sm">
-        {grandparents}
-      </p>
+      {grandparents && (
+        <p className="font-serif text-xs italic text-ink-soft sm:text-sm">
+          {grandparents}
+        </p>
+      )}
     </div>
   );
 }

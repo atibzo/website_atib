@@ -1,13 +1,14 @@
-# Sourabh & Tejaswini — Wedding Website
+# Atib & Sana — Wedding Website
 
-An elegant, animated Indian wedding invitation site built with **Next.js (App
-Router) + TypeScript + Tailwind CSS**, ready to deploy on Vercel.
+An elegant, animated wedding invitation site built with **Next.js (App Router) +
+TypeScript + Tailwind CSS**, ready to deploy on Vercel.
 
 It opens on a **scroll-unfolding letter video**, then leads into the
-invitation, a scratch-to-reveal **Save the Date**, a **moments** carousel, the
-**Sacred Ceremonies** schedule, and an **RSVP** form that writes to a Google
-Sheet. Floating petals, gold corner frames, a watercolour floral border, and a
-background-music toggle complete the aesthetic.
+invitation (a **Bismillah** invocation with the couple's names), a
+scratch-to-reveal **Save the Date**, a **moments** carousel, the **Sacred
+Ceremonies** schedule (Nikah & Sangeet), and an **RSVP** form that writes to a
+Google Sheet. Floating petals, gold corner frames, a watercolour floral border,
+and a background-music toggle complete the aesthetic.
 
 ## Quick start
 
@@ -33,7 +34,7 @@ Drop files into `public/` and point `config/site.ts` at them:
 | Gallery photos/videos | `public/media/…` | `gallery.media[]` |
 | Event invitation videos/images | `public/media/…` | `events.list[].media` |
 | Background music | `public/audio/background.mp3` | `music.src` |
-| Ganesha / auspicious mark | `public/decor/ganesha.svg` | (used by Hero) |
+| Emblem (crescent & star) | `public/decor/bismillah.svg` | `invitation.emblem` |
 | Floral top border | `public/decor/floral-border.svg` | (used by Hero) |
 
 The shipped `public/decor/*.svg` files and the placeholder gallery/event cards
@@ -108,7 +109,7 @@ auto-detected). Add the `NEXT_PUBLIC_RSVP_ENDPOINT` env var. Done.
 
 - Content-driven via `config/site.ts` (single source of truth).
 - Fonts via `next/font/google`: Great Vibes, Yellowtail, Cormorant Garamond,
-  Tiro Devanagari Sanskrit.
+  Amiri (Arabic).
 - Scroll-reveal uses `IntersectionObserver` (`components/Reveal.tsx`); the
   scratch cards share one canvas component (`components/ScratchCard.tsx`).
 - All animations respect `prefers-reduced-motion`.

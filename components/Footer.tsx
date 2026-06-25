@@ -11,10 +11,8 @@ export default function Footer() {
           {couple.groom.firstName} &amp; {couple.bride.firstName}
         </p>
         <p className="mt-4 font-serif text-lg italic text-ink">
-          {events.list[events.list.length - 1].dateNum}{" "}
-          {events.list[events.list.length - 1].month}{" "}
-          {events.list[events.list.length - 1].year} ·{" "}
-          {events.list[events.list.length - 1].venue}
+          {events.list[0].dateNum} {events.list[0].month} {events.list[0].year} ·{" "}
+          {events.list[0].venue}
         </p>
         <p className="mx-auto mt-6 max-w-md font-serif text-base text-ink-soft">
           {footer.thankYou}

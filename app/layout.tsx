@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Great_Vibes,
-  Yellowtail,
-  Cormorant_Garamond,
-  Tiro_Devanagari_Sanskrit,
-} from "next/font/google";
+import { Great_Vibes, Yellowtail, Cormorant_Garamond, Amiri } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import Petals from "@/components/decor/Petals";
@@ -33,11 +28,10 @@ const serif = Cormorant_Garamond({
   display: "swap",
 });
 
-const deva = Tiro_Devanagari_Sanskrit({
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["devanagari", "latin"],
-  variable: "--font-deva",
+const arabic = Amiri({
+  weight: ["400", "700"],
+  subsets: ["arabic", "latin"],
+  variable: "--font-arabic",
   display: "swap",
 });
 
@@ -54,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${script.variable} ${brush.variable} ${serif.variable} ${deva.variable}`}
+      className={`${script.variable} ${brush.variable} ${serif.variable} ${arabic.variable}`}
     >
       <body className="font-serif antialiased overflow-x-hidden">
         {/* Global decorative layers */}

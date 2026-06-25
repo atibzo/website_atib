@@ -37,30 +37,34 @@ export const siteConfig = {
   // ── The couple ──────────────────────────────────────────────────────────
   couple: {
     groom: {
-      firstName: "Sourabh",
-      parents: "Son of Mr. Kamlesh M Mehta & Mrs. Madhu Mehta",
-      grandparents: "(Grandson of Late Shri Motilalji Mehta & Late Smt. Jaywanti)",
+      firstName: "Atib",
+      lastName: "Shaikh",
+      // TODO: replace with the real names of the groom's parents.
+      parents: "Son of Mr. [Father’s Name] Shaikh & Mrs. [Mother’s Name]",
+      grandparents: "",
     },
     bride: {
-      firstName: "Tejaswini",
-      parents: "Daughter of Mr. Kedar M Ghasari & Mrs. Shaila",
-      grandparents:
-        "(Granddaughter of Late Shri Marutirao Ghasari & Smt Chanda, Smt Ranjana)",
+      firstName: "Sana",
+      lastName: "Anjum",
+      // TODO: replace with the real names of the bride's parents.
+      parents: "Daughter of Mr. [Father’s Name] & Mrs. [Mother’s Name]",
+      grandparents: "",
     },
   },
 
   // ── The wedding date (used by Save-the-Date + countdown maths) ────────────
-  // ISO 8601, local time of the main ceremony.
-  weddingDate: "2026-05-08T11:00:00+05:30",
-  hashtag: "#SourabhWedsTejaswini",
+  // ISO 8601, local time of the main ceremony (the Nikah).
+  weddingDate: "2026-10-02T18:00:00+05:30",
+  hashtag: "#AtibWedsSana",
 
   // ── Invitation / hero card ────────────────────────────────────────────────
   invitation: {
-    // Devanagari shloka shown beneath the Ganesha mark.
-    shloka: [
-      "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।",
-      "निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥",
-    ],
+    // Emblem shown at the top of the card. Swap this SVG for custom artwork.
+    emblem: "/decor/bismillah.svg",
+    // Bismillah invocation (Arabic, shown right-to-left) + its meaning.
+    invocationArabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+    invocationMeaning:
+      "In the name of Allah, the Most Gracious, the Most Merciful",
     blessing:
       "With the blessings of the Almighty & our respected elders, we joyfully request your gracious presence on the wedding celebration of",
   },
@@ -80,8 +84,8 @@ export const siteConfig = {
     instruction: "Scratch the hearts to reveal",
     // One reveal per heart (left → right).
     hearts: [
-      { hint: "Day", value: "08" },
-      { hint: "Month", value: "MAY" },
+      { hint: "Day", value: "02" },
+      { hint: "Month", value: "OCT" },
       { hint: "Year", value: "2026" },
     ],
   },
@@ -96,7 +100,7 @@ export const siteConfig = {
         type: "video",
         src: "/media/a-sacred-union.mp4",
         poster: "/decor/moment-1.svg",
-        alt: "Sourabh & Tejaswini — A Sacred Union",
+        alt: "Atib & Sana — A Sacred Union",
       },
       { type: "image", src: "/decor/moment-2.svg", alt: "A cherished moment" },
       { type: "image", src: "/decor/moment-3.svg", alt: "Together" },
@@ -109,38 +113,30 @@ export const siteConfig = {
     heading: "Sacred Ceremonies",
     list: [
       {
-        dateLabel: "07TH MAY, 2026",
-        name: "Sangeet",
-        dayName: "Thursday",
-        dateNum: "07",
-        month: "May",
+        dateLabel: "02ND OCTOBER, 2026",
+        name: "Nikah",
+        dayName: "Friday",
+        dateNum: "02",
+        month: "October",
         year: "2026",
-        time: "8:00 PM Onwards",
-        venue: "Woodrose Banquets and Hotel, Belagavi",
-        mapUrl: "https://maps.google.com/?q=Woodrose+Banquets+and+Hotel+Belagavi",
-        media: {
-          type: "image",
-          src: "/decor/event-sangeet.svg",
-          alt: "Sangeet invitation",
-        },
-        blessing: "An evening of music, dance & celebration.",
+        // TODO: confirm the ceremony time.
+        time: "Time to be announced",
+        venue: "Regenta Beach House Resort, Goa",
+        mapUrl: "https://maps.google.com/?q=Regenta+Beach+House+Resort+Goa",
+        blessing: "Two souls, one sacred promise — witnessed with love & duas.",
       },
       {
-        dateLabel: "08TH MAY, 2026",
-        name: "Marriage",
-        dayName: "Friday",
-        dateNum: "08",
-        month: "May",
+        dateLabel: "03RD OCTOBER, 2026",
+        name: "Sangeet",
+        dayName: "Saturday",
+        dateNum: "03",
+        month: "October",
         year: "2026",
-        time: "11:00 AM",
-        venue: "Woodrose Banquets and Hotel, Belagavi",
-        mapUrl: "https://maps.google.com/?q=Woodrose+Banquets+and+Hotel+Belagavi",
-        media: {
-          type: "image",
-          src: "/decor/event-marriage.svg",
-          alt: "Wedding Ceremony invitation",
-        },
-        blessing: "Sacred vows, eternal bond, blessed beginnings.",
+        // TODO: confirm the ceremony time.
+        time: "Time to be announced",
+        venue: "Regenta Baywatch Resort, Goa",
+        mapUrl: "https://maps.google.com/?q=Regenta+Baywatch+Resort+Goa",
+        blessing: "An evening of music, dance & celebration.",
       },
     ] as WeddingEvent[],
   },
@@ -150,8 +146,9 @@ export const siteConfig = {
     eyebrow: "Be Our Guest",
     heading: "Will You Join Us?",
     intro:
-      "Your presence would make our celebration complete. Kindly let us know by 30th April, 2026.",
-    deadline: "30th April, 2026",
+      "Your presence would make our celebration complete. Kindly let us know by the date below.",
+    // TODO: set your RSVP deadline.
+    deadline: "15th September, 2026",
   },
 
   // ── Background music ──────────────────────────────────────────────────────

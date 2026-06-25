@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none" role="img" aria-label="Crescent and star">
+  <g stroke="#B8923C" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- radiance arc above -->
+    <path d="M30 34 C40 20 80 20 90 34" opacity="0.8"/>
+    <circle cx="36" cy="30" r="1.3" fill="#B8923C"/>
+    <circle cx="60" cy="24" r="1.5" fill="#B8923C"/>
+    <circle cx="84" cy="30" r="1.3" fill="#B8923C"/>
+    <!-- decorative under-flourish -->
+    <path d="M34 96 C48 104 72 104 86 96" opacity="0.7"/>
+  </g>
+  <!-- crescent -->
+  <path
+    d="M78 60 a22 22 0 1 1 -8.5 -17.3 a17 17 0 1 0 0 34.6 A22 22 0 0 1 78 60 Z"
+    fill="#BC5836"
+  />
+  <!-- five-pointed star -->
+  <path
+    d="M86 50 l2.7 5.6 6.1 0.8 -4.5 4.2 1.1 6.1 -5.4 -2.9 -5.4 2.9 1.1 -6.1 -4.5 -4.2 6.1 -0.8 Z"
+    fill="#B8923C"
+  />
+</svg>

@@ -25,7 +25,7 @@ const config: Config = {
         script: ["var(--font-script)", "cursive"],
         brush: ["var(--font-brush)", "cursive"],
         serif: ["var(--font-serif)", "Georgia", "serif"],
-        deva: ["var(--font-deva)", "serif"],
+        arabic: ["var(--font-arabic)", "serif"],
       },
       boxShadow: {
         card: "0 24px 60px -28px rgba(120, 72, 45, 0.35)",
