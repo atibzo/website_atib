@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #fbf4ec;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: #5b4a42;
+  /* Warm watercolour wash so the page never reads as flat cream. */
+  background-image:
+    radial-gradient(1200px 600px at 50% -10%, rgba(201, 122, 82, 0.12), transparent 60%),
+    radial-gradient(900px 500px at 100% 100%, rgba(184, 146, 60, 0.1), transparent 55%),
+    radial-gradient(900px 500px at 0% 90%, rgba(188, 88, 54, 0.08), transparent 55%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  /* Small, letter-spaced section eyebrow ("SAVE THE DATE", "A GLIMPSE OF US") */
+  .eyebrow {
+    @apply font-serif uppercase tracking-[0.4em] text-gold text-xs sm:text-sm;
+  }
+
+  /* Rust brush-script section heading */
+  .heading-script {
+    @apply font-brush text-rust leading-[1.05] text-5xl sm:text-6xl md:text-7xl;
+  }
+
+  .divider-star::before,
+  .divider-star::after {
+    content: "";
+    display: inline-block;
+    width: 56px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #b8923c, transparent);
+    vertical-align: middle;
+    margin: 0 14px;
+  }
+}
+
+/* Falling petal/confetti animation (used by Petals.tsx) */
+@keyframes petal-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(var(--drift, 40px), 110vh, 0) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .petal {
+    display: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
