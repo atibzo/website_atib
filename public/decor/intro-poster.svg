@@ -6,7 +6,8 @@
     </linearGradient>
   </defs>
   <rect width="1280" height="720" fill="url(#p)"/>
-  <rect x="440" y="230" width="400" height="280" rx="10" fill="#FFFDFA" stroke="#B8923C" stroke-width="2"/>
-  <path d="M440 240 L640 380 L840 240" fill="none" stroke="#C97A6E" stroke-width="2"/>
-  <text x="640" y="600" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#BC5836">Scroll to open the invitation</text>
+  <rect x="440" y="220" width="400" height="280" rx="10" fill="#FFFDFA" stroke="#B8923C" stroke-width="2"/>
+  <path d="M440 230 L640 370 L840 230" fill="none" stroke="#C97A6E" stroke-width="2"/>
+  <!-- wax-seal dot where the flap meets, echoing the open cue -->
+  <circle cx="640" cy="360" r="18" fill="#BC5836" opacity="0.9"/>
 </svg>

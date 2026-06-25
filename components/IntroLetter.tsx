@@ -3,156 +3,146 @@
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 
-/**
- * Scroll-scrubbed video intro. The site opens on a "closed letter" video; as
- * the guest scrolls (or drags on touch), the video is scrubbed open frame by
- * frame, then hands off to the invitation below.
- *
- * Mechanics: a tall wrapper (`scrollVh` high) pins a full-viewport <video>.
- * The wrapper's scroll progress (0→1) maps to `video.currentTime`. We never
- * call play(); we drive currentTime directly, eased via requestAnimationFrame
- * for a smooth unfold even when scroll events arrive in bursts.
- *
- * Fallbacks: under prefers-reduced-motion, or if metadata never loads, the
- * section collapses to one screen and simply plays the clip once (muted),
- * so the page is always usable.
- */
-export default function IntroLetter({ scrollVh = 320 }: { scrollVh?: number }) {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [reduced, setReduced] = useState(false);
-  const [progress, setProgress] = useState(0);
+type Phase = "closed" | "opening";
 
+/**
+ * Tap-to-open letter intro. Shows the closed letter as a full-screen overlay;
+ * on tap the video plays the unfold (with its own audio), then the overlay
+ * dissolves to reveal the invitation underneath.
+ *
+ * Why not scroll-scrubbing: driving video.currentTime from scroll is janky to
+ * frozen on non-faststart / sparse-keyframe MP4s (and throttled on mobile).
+ * Playing the clip is reliable everywhere.
+ *
+ * The page's first real section (#invitation) sits at scroll-top behind this
+ * overlay, so dismissal is a true cross-fade. Scroll is locked while open.
+ */
+export default function IntroLetter() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [phase, setPhase] = useState<Phase>("closed");
+  const [closing, setClosing] = useState(false); // fading out
+  const [dismissed, setDismissed] = useState(false); // unmounted
+  // Becomes true if autoplay/codec fails — cue switches to "tap to enter".
+  const [playFailed, setPlayFailed] = useState(false);
+
+  // Reduced motion: skip the whole thing immediately.
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const onChange = () => setReduced(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDismissed(true);
+    }
   }, []);
 
+  // Lock body scroll while the overlay is visible.
   useEffect(() => {
-    const wrap = wrapRef.current;
-    const video = videoRef.current;
-    if (!wrap || !video) return;
-
-    if (reduced) {
-      // Calm fallback: just let it play through once.
-      video.muted = true;
-      video.play().catch(() => {});
-      return;
-    }
-
-    let duration = 0;
-    let target = 0; // desired currentTime from scroll
-    let shown = 0; // eased currentTime actually applied
-    let raf = 0;
-    let pendingProgress = 0;
-
-    const onMeta = () => {
-      duration = video.duration || 0;
-    };
-    video.addEventListener("loadedmetadata", onMeta);
-    if (video.readyState >= 1) onMeta();
-
-    const computeProgress = () => {
-      const rect = wrap.getBoundingClientRect();
-      const scrollable = rect.height - window.innerHeight;
-      if (scrollable <= 0) return 0;
-      const p = -rect.top / scrollable;
-      return Math.min(1, Math.max(0, p));
-    };
-
-    const loop = () => {
-      target = pendingProgress * duration;
-      // Ease the applied time toward the scroll target.
-      shown += (target - shown) * 0.12;
-      if (duration > 0 && Math.abs(target - shown) > 0.005) {
-        try {
-          video.currentTime = shown;
-        } catch {
-          /* seeking may briefly throw mid-load; ignore */
-        }
-      }
-      raf = requestAnimationFrame(loop);
-    };
-
-    const onScroll = () => {
-      pendingProgress = computeProgress();
-      setProgress(pendingProgress);
-    };
-
-    onScroll();
-    raf = requestAnimationFrame(loop);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-
+    if (dismissed) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      video.removeEventListener("loadedmetadata", onMeta);
+      document.body.style.overflow = prev;
     };
-  }, [reduced]);
+  }, [dismissed]);
 
-  // Hint fades out as the letter opens.
-  const hintOpacity = Math.max(0, 1 - progress * 2.2);
+  // Escape key skips (accessible, no visible button).
+  useEffect(() => {
+    if (dismissed) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") finish();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dismissed]);
+
+  // Fade out, then unmount after the transition.
+  const finish = () => {
+    setClosing(true);
+    window.setTimeout(() => setDismissed(true), 750);
+  };
+
+  const open = async () => {
+    if (phase !== "closed") return;
+    const video = videoRef.current;
+    if (!video) return finish();
+    setPhase("opening");
+    try {
+      video.muted = false;
+      await video.play();
+    } catch {
+      // Autoplay blocked or codec unsupported — let the guest dissolve in.
+      setPlayFailed(true);
+    }
+  };
+
+  // Tapping the overlay: open when closed, skip to end when playing.
+  const onOverlayClick = () => {
+    if (phase === "closed") open();
+    else finish();
+  };
+
+  if (dismissed) return null;
 
   return (
-    <section
-      ref={wrapRef}
-      aria-label="Wedding invitation — scroll to open"
-      className="relative z-10"
-      style={{ height: reduced ? "100svh" : `${scrollVh}vh` }}
+    <div
+      onClick={onOverlayClick}
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-cream transition-opacity duration-700"
+      style={{ opacity: closing ? 0 : 1, pointerEvents: closing ? "none" : "auto" }}
+      role="dialog"
+      aria-label="Wedding invitation"
     >
-      <div className="sticky top-0 flex h-[100svh] w-full items-center justify-center overflow-hidden">
-        <video
-          ref={videoRef}
-          className="h-full w-full object-cover"
-          src={siteConfig.intro.video}
-          poster={siteConfig.intro.poster}
-          muted
-          playsInline
-          preload="auto"
-          // Keep last-frame visible when scrubbed to the end.
-          disablePictureInPicture
-        />
+      <video
+        ref={videoRef}
+        className="h-full w-full object-cover"
+        src={siteConfig.intro.video}
+        poster={siteConfig.intro.poster}
+        playsInline
+        preload="auto"
+        onEnded={finish}
+        disablePictureInPicture
+      />
 
-        {/* gentle vignette so overlay text is legible */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-cream/30 via-transparent to-cream/40" />
+      {/* soft wash for cue legibility (closed state only) */}
+      {phase === "closed" && (
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-cream/20 via-transparent to-cream/50" />
+      )}
 
-        {/* scroll-to-open hint */}
-        <div
-          className="pointer-events-none absolute bottom-10 left-0 right-0 flex flex-col items-center gap-2"
-          style={{ opacity: hintOpacity, transition: "opacity 0.2s linear" }}
+      {/* tap-to-open cue — the only chrome */}
+      {phase === "closed" && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            open();
+          }}
+          aria-label={`${siteConfig.intro.openLabel} — open the invitation`}
+          className="group absolute bottom-[12%] left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 focus:outline-none"
         >
-          <span className="eyebrow text-rust">Scroll to open</span>
-          <svg
-            className="animate-bounce-soft text-rust"
-            width="26"
-            height="26"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M6 9l6 6 6-6"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
+          <span className="relative flex h-16 w-16 items-center justify-center">
+            <span className="absolute inset-0 animate-ping rounded-full bg-rust/30" />
+            <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-rust text-cream shadow-soft transition group-hover:scale-105">
+              <WaxSealMark />
+            </span>
+          </span>
+          <span className="eyebrow text-rust">
+            {playFailed ? "Tap to enter" : siteConfig.intro.openLabel}
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
 
-        {/* accessible skip */}
-        <a
-          href="#invitation"
-          className="absolute right-5 top-5 rounded-full bg-card/80 px-4 py-1.5 font-serif text-sm tracking-wide text-rust shadow-soft backdrop-blur transition hover:bg-card focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-        >
-          Skip intro
-        </a>
-      </div>
-    </section>
+function WaxSealMark() {
+  return (
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      {/* crescent + star, echoing the invitation emblem */}
+      <path
+        d="M15.5 12a4.2 4.2 0 1 1-1.6-3.3 3.2 3.2 0 1 0 0 6.6A4.2 4.2 0 0 1 15.5 12Z"
+        fill="currentColor"
+      />
+      <path
+        d="M17.6 9.2l.5 1.1 1.2.15-.9.82.22 1.18-1.04-.56-1.05.56.22-1.18-.9-.82 1.2-.15z"
+        fill="currentColor"
+      />
+    </svg>
   );
 }

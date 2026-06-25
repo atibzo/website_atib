@@ -73,8 +73,10 @@ export const siteConfig = {
   // The site opens on this video; scrolling scrubs it open like a letter.
   intro: {
     video: "/media/a-sacred-union.mp4",
-    // Optional poster frame shown before the video can paint.
+    // Shown as the "closed letter" before the guest opens it.
     poster: "/decor/intro-poster.svg",
+    // Cue inviting the guest to open the letter.
+    openLabel: "Tap to open",
   },
 
   // ── Save the Date (scratch hearts) ────────────────────────────────────────

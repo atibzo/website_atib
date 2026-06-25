@@ -3,8 +3,9 @@
 An elegant, animated wedding invitation site built with **Next.js (App Router) +
 TypeScript + Tailwind CSS**, ready to deploy on Vercel.
 
-It opens on a **scroll-unfolding letter video**, then leads into the
-invitation (a **Bismillah** invocation with the couple's names), a
+It opens on a **tap-to-open letter video** — the closed letter plays open when
+tapped, then dissolves into the invitation (a **Bismillah** invocation with the
+couple's names), a
 scratch-to-reveal **Save the Date**, a **moments** carousel, the **Sacred
 Ceremonies** schedule (Nikah & Sangeet), and an **RSVP** form that writes to a
 Google Sheet. Floating petals, gold corner frames, a watercolour floral border,
@@ -48,16 +49,20 @@ Media items use this shape:
 
 ### About the intro video
 
-The intro is **scroll-scrubbed**: scroll position maps to the video's playback
-time, so the letter unfolds as the guest scrolls. For the smoothest scrubbing,
-encode the MP4 with `+faststart` and frequent keyframes, e.g.:
+The intro is **tap-to-open**: the closed letter (the video paused at its first
+frame, over `intro.poster`) shows a "tap to open" cue; on tap the clip plays the
+unfold with its own audio, then the overlay dissolves into the invitation. Tap
+again (or press `Escape`) to skip; under `prefers-reduced-motion` the intro is
+skipped entirely.
+
+Optional: encode the MP4 with `+faststart` so playback can begin before the
+whole file downloads (the `moov` atom moves to the front):
 
 ```bash
-ffmpeg -i input.mp4 -movflags +faststart -g 15 -pix_fmt yuv420p public/media/a-sacred-union.mp4
+ffmpeg -i input.mp4 -movflags +faststart -c copy public/media/a-sacred-union.mp4
 ```
 
-(The site works without re-encoding; this just makes seeking smoother.) Under
-`prefers-reduced-motion`, the intro plays through once instead of scrubbing.
+(The site works without this; it only reduces start latency.)
 
 ## RSVP → Google Sheet
 
