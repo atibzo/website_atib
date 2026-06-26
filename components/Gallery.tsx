@@ -41,7 +41,11 @@ export default function Gallery() {
             {gallery.media.map((m, i) => (
               <figure
                 key={i}
-                className="relative aspect-[3/4] w-[72vw] max-w-[320px] flex-none snap-center overflow-hidden rounded-2xl bg-card shadow-card sm:w-[320px]"
+                className={`relative flex-none snap-center overflow-hidden rounded-2xl bg-card shadow-card ring-1 ring-gold/30 ${
+                  m.landscape
+                    ? "aspect-[3/2] w-[86vw] max-w-[480px]"
+                    : "aspect-[3/4] w-[72vw] max-w-[320px] sm:w-[320px]"
+                }`}
               >
                 <Media media={m} priority={i === 0} />
               </figure>

@@ -14,6 +14,8 @@ export type Media = {
   src: string;
   poster?: string; // optional preview image for videos
   alt: string;
+  /** Render in a wider landscape card (for group/landscape photos). */
+  landscape?: boolean;
 };
 
 export type WeddingEvent = {
@@ -95,10 +97,13 @@ export const siteConfig = {
     eyebrow: "A Glimpse of Us",
     heading: "Our Beautiful Moments",
     // Add the couple's photos/videos here. Placeholders ship by default.
+    // Drop your photos into /public/media with these exact names (see
+    // public/media/README.md). Portrait images use tall cards; set
+    // `landscape: true` for wide/group photos so they aren't cropped.
     media: [
-      { type: "image", src: "/decor/moment-1.svg", alt: "A beautiful moment" },
-      { type: "image", src: "/decor/moment-2.svg", alt: "A cherished moment" },
-      { type: "image", src: "/decor/moment-3.svg", alt: "Together" },
+      { type: "image", src: "/media/moment-1.jpg", alt: "Atib & Sana — ring ceremony" },
+      { type: "image", src: "/media/moment-2.jpg", alt: "Atib & Sana" },
+      { type: "image", src: "/media/moment-3.jpg", alt: "Family", landscape: true },
     ] as Media[],
   },
 
