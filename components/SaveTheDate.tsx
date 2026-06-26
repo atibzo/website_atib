@@ -1,6 +1,7 @@
 import { siteConfig } from "@/config/site";
 import Reveal from "@/components/Reveal";
 import ScratchCard from "@/components/ScratchCard";
+import Countdown from "@/components/Countdown";
 
 const { saveTheDate } = siteConfig;
 
@@ -26,7 +27,7 @@ export default function SaveTheDate() {
             <div key={i} className="flex flex-col items-center gap-3">
               <ScratchCard label="SCRATCH">
                 <div className="flex flex-col items-center">
-                  <span className="font-script text-5xl text-rust">
+                  <span className="font-display italic text-4xl text-coral">
                     {heart.value}
                   </span>
                 </div>
@@ -35,6 +36,10 @@ export default function SaveTheDate() {
             </div>
           ))}
         </div>
+      </Reveal>
+
+      <Reveal delay={250} className="mt-16">
+        <Countdown />
       </Reveal>
     </section>
   );

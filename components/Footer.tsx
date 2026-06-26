@@ -11,10 +11,10 @@ export default function Footer() {
           {couple.groom.firstName} &amp; {couple.bride.firstName}
         </p>
         <p className="mt-4 font-serif text-lg italic text-ink">
-          {events.list[events.list.length - 1].dateNum}{" "}
+          {Number(events.list[0].dateNum)} &ndash;{" "}
+          {Number(events.list[events.list.length - 1].dateNum)}{" "}
           {events.list[events.list.length - 1].month}{" "}
-          {events.list[events.list.length - 1].year} ·{" "}
-          {events.list[events.list.length - 1].venue}
+          {events.list[events.list.length - 1].year} · Goa
         </p>
         <p className="mx-auto mt-6 max-w-md font-serif text-base text-ink-soft">
           {footer.thankYou}
