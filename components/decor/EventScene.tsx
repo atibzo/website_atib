@@ -86,7 +86,37 @@ function Marigold({ x, y, r = 9, c = "#F0A93B", c2 = "#E0792A" }: {
   );
 }
 
-/* ── HALDI — sunny, marigold, turmeric ───────────────────────────────────── */
+/* ── poolside props ──────────────────────────────────────────────────────── */
+
+function Umbrella({ x, y }: { x: number; y: number }) {
+  return (
+    <g>
+      <rect x={x - 1.6} y={y} width="3.2" height="170" fill="#B08A55" />
+      <path d={`M${x - 54} ${y + 14} Q ${x} ${y - 20} ${x + 54} ${y + 14} Z`} fill="#E0654B" />
+      <path d={`M${x - 27} ${y + 6} Q ${x} ${y - 12} ${x} ${y - 18}`} fill="none" stroke="#F4D58A" strokeWidth="2.4" opacity="0.8" />
+      <path d={`M${x + 27} ${y + 6} Q ${x} ${y - 12} ${x} ${y - 18}`} fill="none" stroke="#F4D58A" strokeWidth="2.4" opacity="0.8" />
+      <circle cx={x} cy={y - 19} r="3" fill="#B08A55" />
+    </g>
+  );
+}
+
+function Lounger({ x, y }: { x: number; y: number }) {
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      {/* backrest */}
+      <path d="M0 14 L13 -4 L19 0 L8 16 Z" fill="#F4ECDA" />
+      <path d="M3 11 L13 -2" stroke="#E0654B" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
+      {/* seat */}
+      <rect x="6" y="13" width="34" height="5" rx="2.5" fill="#F4ECDA" />
+      <rect x="8" y="14" width="30" height="2.6" fill="#E0654B" opacity="0.75" />
+      {/* legs */}
+      <rect x="9" y="18" width="2.4" height="7" fill="#C9AE84" />
+      <rect x="35" y="18" width="2.4" height="7" fill="#C9AE84" />
+    </g>
+  );
+}
+
+/* ── HALDI — poolside, marigold, turmeric ────────────────────────────────── */
 
 function Haldi() {
   return (
@@ -102,60 +132,65 @@ function Haldi() {
           <stop offset="100%" stopColor="#79C8BF" />
         </linearGradient>
       </defs>
+      {/* sky + sun */}
       <rect width="400" height="533" fill="url(#h-sky)" />
-      {/* sun */}
-      <circle cx="300" cy="120" r="46" fill="#FBE7A6" opacity="0.85" />
-      <circle cx="300" cy="120" r="30" fill="#F8D77A" />
-      {/* palms (behind the pool) */}
-      <Palm x={64} y={430} s={1.1} fill="#4A7A63" />
-      <Palm x={356} y={438} s={1.3} flip fill="#3C6B5D" />
-      {/* poolside deck */}
-      <rect y="356" width="400" height="177" fill="#E9D6B4" />
-      <rect y="356" width="400" height="9" fill="#D8C098" opacity="0.6" />
-      {/* swimming pool with tiled rim */}
-      <rect x="34" y="372" width="332" height="92" rx="14" fill="#CFE7DF" />
-      <rect x="40" y="378" width="320" height="80" rx="10" fill="url(#h-pool)" />
-      {/* ripples */}
-      <g stroke="#EAF6F1" strokeWidth="2" opacity="0.6" strokeLinecap="round" fill="none">
-        <path d="M64 404 q 16 -6 32 0 t 32 0" />
-        <path d="M214 420 q 16 -6 32 0 t 32 0" />
-        <path d="M120 440 q 16 -6 32 0 t 32 0" />
+      <circle cx="332" cy="58" r="32" fill="#FBE7A6" opacity="0.85" />
+      <circle cx="332" cy="58" r="20" fill="#F8D77A" />
+
+      {/* poolside deck (warm stone with tile lines) */}
+      <rect y="150" width="400" height="383" fill="#EAD7B6" />
+      <g stroke="#D7C098" strokeWidth="1" opacity="0.5">
+        <line x1="0" y1="150" x2="400" y2="150" />
+        <line x1="0" y1="360" x2="400" y2="360" />
+        <line x1="120" y1="360" x2="120" y2="533" />
+        <line x1="280" y1="360" x2="280" y2="533" />
       </g>
-      {/* marigold petals floating on the water */}
-      <Marigold x={92} y={410} r={6} c="#F0A93B" />
-      <Marigold x={300} y={398} r={6} c="#E68A2E" />
-      <Marigold x={250} y={440} r={5} c="#F0A93B" />
-      {/* marigold garland (toran) */}
-      <path d="M0 64 Q 200 130 400 64" fill="none" stroke="#5C8A4A" strokeWidth="3" />
+
+      {/* marigold garland overhead */}
+      <path d="M0 44 Q 200 96 400 44" fill="none" stroke="#5C8A4A" strokeWidth="2.4" />
       {Array.from({ length: 13 }).map((_, i) => {
         const t = i / 12;
         const x = t * 400;
-        const y = 64 + 66 * Math.sin(Math.PI * t);
-        return <line key={i} x1={x} y1={y} x2={x} y2={y + 16} stroke="#5C8A4A" strokeWidth="1.6" />;
+        const y = 44 + 52 * Math.sin(Math.PI * t);
+        return (
+          <g key={i}>
+            <line x1={x} y1={y} x2={x} y2={y + 11} stroke="#5C8A4A" strokeWidth="1.3" />
+            <Marigold x={x} y={y + 17} r={7} c={i % 2 ? "#E68A2E" : "#F0A93B"} />
+          </g>
+        );
       })}
-      {Array.from({ length: 13 }).map((_, i) => {
-        const t = i / 12;
-        const x = t * 400;
-        const y = 64 + 66 * Math.sin(Math.PI * t) + 20;
-        return <Marigold key={i} x={x} y={y} r={9} c={i % 2 ? "#F0A93B" : "#E68A2E"} />;
-      })}
-      {/* extra hanging marigold strands */}
-      {[120, 200, 280].map((x, i) => (
-        <g key={i}>
-          <line x1={x} y1="86" x2={x} y2="180" stroke="#5C8A4A" strokeWidth="1.4" />
-          {[0, 1, 2, 3].map((k) => (
-            <Marigold key={k} x={x} y={104 + k * 24} r={6} c={k % 2 ? "#E68A2E" : "#F0A93B"} />
-          ))}
-        </g>
-      ))}
-      {/* low decorated platform + seated couple */}
-      <ellipse cx="200" cy="508" rx="96" ry="14" fill="#C9A86F" opacity="0.45" />
-      <rect x="120" y="486" width="160" height="20" rx="5" fill="#C58B4A" />
-      <rect x="120" y="486" width="160" height="6" fill="#E8A93B" />
-      <Couple x={200} y={486} s={0.82} fill="#6B4429" />
-      {/* turmeric bowl */}
-      <ellipse cx="300" cy="470" rx="26" ry="8" fill="#E8A93B" />
-      <ellipse cx="300" cy="467" rx="20" ry="6" fill="#F4C24A" />
+
+      {/* swimming pool (the hero) — tiled rim + blue water */}
+      <rect x="58" y="172" width="284" height="162" rx="20" fill="#CFE7DF" />
+      <rect x="66" y="180" width="268" height="146" rx="15" fill="url(#h-pool)" />
+      <g stroke="#EAF7F2" strokeWidth="2" opacity="0.5" strokeLinecap="round" fill="none">
+        <path d="M96 214 q 16 -6 32 0 t 32 0" />
+        <path d="M214 236 q 16 -6 32 0 t 32 0" />
+        <path d="M120 272 q 16 -6 32 0 t 32 0" />
+      </g>
+      {/* metal pool ladder */}
+      <g stroke="#EBF4F0" strokeWidth="4" strokeLinecap="round">
+        <line x1="188" y1="300" x2="188" y2="340" />
+        <line x1="210" y1="300" x2="210" y2="340" />
+        <line x1="188" y1="312" x2="210" y2="312" />
+        <line x1="188" y1="324" x2="210" y2="324" />
+      </g>
+      {/* marigolds floating on the water */}
+      <Marigold x={108} y={250} r={7} c="#F0A93B" />
+      <Marigold x={296} y={214} r={6} c="#E68A2E" />
+      <Marigold x={252} y={290} r={6} c="#F0A93B" />
+
+      {/* parasol + sun-loungers on the left deck */}
+      <Umbrella x={36} y={150} />
+      <Lounger x={8} y={250} />
+      <Lounger x={8} y={290} />
+
+      {/* couple standing at the pool edge (right deck) */}
+      <Couple x={372} y={300} s={0.58} fill="#6B4429" />
+
+      {/* turmeric bowl on the deck */}
+      <ellipse cx="44" cy="344" rx="20" ry="6" fill="#E8A93B" />
+      <ellipse cx="44" cy="341" rx="14" ry="4.5" fill="#F4C24A" />
     </>
   );
 }
