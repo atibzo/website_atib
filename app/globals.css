@@ -45,6 +45,35 @@ body {
   }
 }
 
+/* Animated gold-foil text fill (monogram / wordmark) */
+.gold-shimmer {
+  background: linear-gradient(
+    100deg,
+    #b8923c 0%,
+    #ecca74 22%,
+    #fff1c9 38%,
+    #cda85b 55%,
+    #b8923c 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gold-sweep 7s linear infinite;
+}
+@keyframes gold-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Gentle idle float (the closed envelope) */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.float-soft { animation: float-soft 6s ease-in-out infinite; }
+
 /* Falling petal/confetti animation (used by Petals.tsx) */
 @keyframes petal-fall {
   0% {
@@ -75,5 +104,6 @@ body {
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
