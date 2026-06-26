@@ -1,44 +1,108 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="420" height="260" viewBox="0 0 420 260" fill="none" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360" fill="none" aria-hidden="true">
   <defs>
-    <radialGradient id="rose" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="#F0C7C0"/>
-      <stop offset="55%" stop-color="#E2A39A"/>
-      <stop offset="100%" stop-color="#C97A6E"/>
+    <radialGradient id="rosePetal" cx="50%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#FBE0D4"/>
+      <stop offset="55%" stop-color="#EBA68F"/>
+      <stop offset="100%" stop-color="#D2785F"/>
     </radialGradient>
-    <radialGradient id="roseLight" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="#FBE6DD"/>
-      <stop offset="100%" stop-color="#EBBCAC"/>
+    <radialGradient id="roseInner" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#FCEDE3"/>
+      <stop offset="100%" stop-color="#E59A82"/>
     </radialGradient>
-    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#C9C8A8"/>
-      <stop offset="100%" stop-color="#9FAE84"/>
+    <radialGradient id="peonyOuter" cx="50%" cy="40%" r="62%">
+      <stop offset="0%" stop-color="#FDEFE8"/>
+      <stop offset="100%" stop-color="#F0BBC0"/>
+    </radialGradient>
+    <radialGradient id="peonyInner" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#FFF6F0"/>
+      <stop offset="100%" stop-color="#F2C7A0"/>
+    </radialGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#AEBE8E"/>
+      <stop offset="100%" stop-color="#7E9468"/>
     </linearGradient>
+
+    <!-- layered cabbage rose -->
+    <symbol id="rose" viewBox="0 0 100 100">
+      <g>
+        <g fill="url(#rosePetal)">
+          <ellipse cx="50" cy="50" rx="20" ry="30" transform="rotate(0 50 50)"/>
+          <ellipse cx="50" cy="50" rx="20" ry="30" transform="rotate(60 50 50)"/>
+          <ellipse cx="50" cy="50" rx="20" ry="30" transform="rotate(120 50 50)"/>
+          <ellipse cx="50" cy="50" rx="20" ry="30" transform="rotate(180 50 50)"/>
+          <ellipse cx="50" cy="50" rx="20" ry="30" transform="rotate(240 50 50)"/>
+          <ellipse cx="50" cy="50" rx="20" ry="30" transform="rotate(300 50 50)"/>
+        </g>
+        <g fill="url(#roseInner)">
+          <ellipse cx="50" cy="52" rx="13" ry="20" transform="rotate(30 50 50)"/>
+          <ellipse cx="50" cy="52" rx="13" ry="20" transform="rotate(90 50 50)"/>
+          <ellipse cx="50" cy="52" rx="13" ry="20" transform="rotate(150 50 50)"/>
+          <ellipse cx="50" cy="52" rx="13" ry="20" transform="rotate(210 50 50)"/>
+          <ellipse cx="50" cy="52" rx="13" ry="20" transform="rotate(270 50 50)"/>
+          <ellipse cx="50" cy="52" rx="13" ry="20" transform="rotate(330 50 50)"/>
+        </g>
+        <circle cx="50" cy="52" r="9" fill="#CE6E55"/>
+        <path d="M44 52 a6 6 0 0 1 12 0" fill="none" stroke="#B85B43" stroke-width="1.5"/>
+      </g>
+    </symbol>
+
+    <!-- ruffled peony -->
+    <symbol id="peony" viewBox="0 0 100 100">
+      <g fill="url(#peonyOuter)">
+        <ellipse cx="50" cy="50" rx="22" ry="28" transform="rotate(0 50 50)"/>
+        <ellipse cx="50" cy="50" rx="22" ry="28" transform="rotate(45 50 50)"/>
+        <ellipse cx="50" cy="50" rx="22" ry="28" transform="rotate(90 50 50)"/>
+        <ellipse cx="50" cy="50" rx="22" ry="28" transform="rotate(135 50 50)"/>
+      </g>
+      <g fill="url(#peonyInner)">
+        <ellipse cx="50" cy="50" rx="13" ry="17" transform="rotate(22 50 50)"/>
+        <ellipse cx="50" cy="50" rx="13" ry="17" transform="rotate(67 50 50)"/>
+        <ellipse cx="50" cy="50" rx="13" ry="17" transform="rotate(112 50 50)"/>
+        <ellipse cx="50" cy="50" rx="13" ry="17" transform="rotate(157 50 50)"/>
+      </g>
+      <circle cx="50" cy="50" r="8" fill="#E7C97E"/>
+    </symbol>
+
+    <symbol id="leaf" viewBox="0 0 60 100">
+      <path d="M30 2 C54 28 54 72 30 98 C6 72 6 28 30 2 Z" fill="url(#leafGrad)"/>
+      <path d="M30 8 L30 92" stroke="#6E835A" stroke-width="1.4"/>
+    </symbol>
+
+    <symbol id="bud" viewBox="0 0 60 100">
+      <path d="M30 22 C12 36 12 64 30 78 C48 64 48 36 30 22 Z" fill="url(#roseInner)"/>
+      <path d="M30 70 C22 88 16 92 14 98 M30 70 C38 88 44 92 46 98 M30 70 L30 100" stroke="#7E9468" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </symbol>
   </defs>
-  <g opacity="0.95">
-    <!-- leaves -->
-    <path d="M-10 40 C60 10 120 30 150 80 C100 70 40 70 -10 95 Z" fill="url(#leaf)" opacity="0.8"/>
-    <path d="M140 -10 C170 40 150 90 110 120 C120 70 110 30 80 -10 Z" fill="url(#leaf)" opacity="0.7"/>
-    <path d="M250 30 C300 20 360 40 410 20 C360 70 300 70 250 60 Z" fill="url(#leaf)" opacity="0.7"/>
-    <!-- roses -->
-    <g>
-      <circle cx="60" cy="50" r="40" fill="url(#rose)"/>
-      <circle cx="60" cy="50" r="24" fill="url(#roseLight)"/>
-      <circle cx="60" cy="50" r="10" fill="#C97A6E"/>
+
+  <!-- corner garland: large blooms at the corner trailing inward/down -->
+  <g>
+    <!-- foliage fan -->
+    <use href="#leaf" x="-10" y="40" width="70" height="116" transform="rotate(-28 30 100)"/>
+    <use href="#leaf" x="60" y="0" width="64" height="106" transform="rotate(18 90 60)"/>
+    <use href="#leaf" x="150" y="20" width="60" height="100" transform="rotate(52 180 70)"/>
+    <use href="#leaf" x="220" y="70" width="56" height="92" transform="rotate(78 250 120)"/>
+    <use href="#leaf" x="20" y="150" width="58" height="96" transform="rotate(-58 50 200)"/>
+    <use href="#leaf" x="300" y="40" width="52" height="86" transform="rotate(64 330 90)"/>
+
+    <!-- buds / small accents -->
+    <use href="#bud" x="250" y="20" width="34" height="56" transform="rotate(40 267 48)"/>
+    <use href="#bud" x="120" y="170" width="30" height="50" transform="rotate(-30 135 195)"/>
+
+    <!-- baby's breath dots -->
+    <g fill="#FFF6EC" opacity="0.9">
+      <circle cx="300" cy="120" r="4"/><circle cx="318" cy="135" r="3"/><circle cx="285" cy="140" r="3"/>
+      <circle cx="60" cy="190" r="4"/><circle cx="44" cy="205" r="3"/>
     </g>
-    <g>
-      <circle cx="130" cy="90" r="30" fill="url(#roseLight)"/>
-      <circle cx="130" cy="90" r="16" fill="url(#rose)"/>
+    <g fill="#E7C97E" opacity="0.85">
+      <circle cx="240" cy="120" r="4"/><circle cx="225" cy="135" r="3"/><circle cx="332" cy="95" r="3"/>
     </g>
-    <g>
-      <circle cx="180" cy="40" r="22" fill="url(#rose)"/>
-      <circle cx="180" cy="40" r="11" fill="url(#roseLight)"/>
-    </g>
-    <g>
-      <circle cx="20" cy="110" r="20" fill="url(#roseLight)"/>
-      <circle cx="20" cy="110" r="10" fill="#C97A6E"/>
-    </g>
-    <!-- small buds -->
-    <circle cx="210" cy="95" r="9" fill="#E7C97E" opacity="0.85"/>
-    <circle cx="100" cy="130" r="7" fill="#E7C97E" opacity="0.8"/>
+
+    <!-- the blooms -->
+    <use href="#rose" x="-20" y="-25" width="150" height="150"/>
+    <use href="#peony" x="95" y="10" width="120" height="120"/>
+    <use href="#rose" x="180" y="-10" width="100" height="100"/>
+    <use href="#rose" x="60" y="110" width="92" height="92"/>
+    <use href="#peony" x="200" y="80" width="84" height="84"/>
+    <use href="#rose" x="270" y="30" width="78" height="78"/>
   </g>
 </svg>

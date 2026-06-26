@@ -11,6 +11,33 @@
 
 export type SceneVariant = "haldi" | "sangeet" | "nikah";
 
+/** Text colour tone for overlays drawn on top of each scene. */
+export const sceneTone: Record<SceneVariant, "light" | "dark"> = {
+  haldi: "dark",
+  sangeet: "light",
+  nikah: "dark",
+};
+
+/** A stylised couple silhouette (groom + bride in a gown). */
+function Couple({ x, y, s = 1, fill = "#2B2230" }: {
+  x: number; y: number; s?: number; fill?: string;
+}) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s})`} fill={fill}>
+      {/* groom */}
+      <circle cx="-18" cy="-58" r="9" />
+      <path d="M-27 -50 q9 -6 18 0 l3 50 -24 0 Z" />
+      <rect x="-25" y="0" width="14" height="34" rx="2" />
+      <rect x="-11" y="0" width="6" height="34" rx="2" />
+      {/* bride (gown) */}
+      <circle cx="16" cy="-56" r="8" />
+      <path d="M16 -49 q3 0 4 3 l14 79 -36 0 14 -79 q1 -3 4 -3 Z" />
+      {/* veil */}
+      <path d="M8 -58 q-8 26 -6 60" stroke={fill} strokeWidth="1.5" fill="none" opacity="0.5" />
+    </g>
+  );
+}
+
 export default function EventScene({ variant }: { variant: SceneVariant }) {
   return (
     <svg
@@ -100,15 +127,23 @@ function Haldi() {
         const y = 64 + 66 * Math.sin(Math.PI * t) + 20;
         return <Marigold key={i} x={x} y={y} r={9} c={i % 2 ? "#F0A93B" : "#E68A2E"} />;
       })}
-      {/* turmeric bowl on a low stool */}
-      <ellipse cx="200" cy="500" rx="92" ry="14" fill="#C9A86F" opacity="0.5" />
-      <rect x="150" y="452" width="100" height="40" rx="8" fill="#C58B4A" />
-      <ellipse cx="200" cy="452" rx="50" ry="14" fill="#E8A93B" />
-      <ellipse cx="200" cy="449" rx="42" ry="10" fill="#F4C24A" />
-      {/* scattered petals */}
-      {[[120, 500], [280, 496], [170, 516], [240, 512]].map(([x, y], i) => (
-        <Marigold key={i} x={x} y={y} r={6} c="#F0A93B" />
+      {/* extra hanging marigold strands */}
+      {[120, 200, 280].map((x, i) => (
+        <g key={i}>
+          <line x1={x} y1="86" x2={x} y2="180" stroke="#5C8A4A" strokeWidth="1.4" />
+          {[0, 1, 2, 3].map((k) => (
+            <Marigold key={k} x={x} y={104 + k * 24} r={6} c={k % 2 ? "#E68A2E" : "#F0A93B"} />
+          ))}
+        </g>
       ))}
+      {/* low decorated platform + seated couple */}
+      <ellipse cx="200" cy="508" rx="96" ry="14" fill="#C9A86F" opacity="0.45" />
+      <rect x="120" y="486" width="160" height="20" rx="5" fill="#C58B4A" />
+      <rect x="120" y="486" width="160" height="6" fill="#E8A93B" />
+      <Couple x={200} y={486} s={0.82} fill="#6B4429" />
+      {/* turmeric bowl */}
+      <ellipse cx="300" cy="470" rx="26" ry="8" fill="#E8A93B" />
+      <ellipse cx="300" cy="467" rx="20" ry="6" fill="#F4C24A" />
     </>
   );
 }
@@ -154,13 +189,28 @@ function Sangeet() {
           })}
         </g>
       ))}
-      {/* stage */}
-      <rect x="120" y="372" width="160" height="92" rx="6" fill="#5A3A52" />
-      <rect x="120" y="372" width="160" height="16" fill="#7A4A66" />
-      {/* drapes */}
-      {[140, 175, 210, 245].map((x, i) => (
-        <path key={i} d={`M${x} 388 q 8 40 0 76`} stroke="#C97A8E" strokeWidth="10" fill="none" opacity="0.8" strokeLinecap="round" />
+      {/* disco balls */}
+      {[[96, 150], [304, 138]].map(([cx, cy], i) => (
+        <g key={i}>
+          <line x1={cx} y1="0" x2={cx} y2={cy - 12} stroke="#caa86b" strokeWidth="1" />
+          <circle cx={cx} cy={cy} r="12" fill="#9FB6C4" />
+          <g stroke="#E8F0F4" strokeWidth="0.7" opacity="0.7">
+            <line x1={cx - 12} y1={cy} x2={cx + 12} y2={cy} />
+            <line x1={cx} y1={cy - 12} x2={cx} y2={cy + 12} />
+            <line x1={cx - 9} y1={cy - 8} x2={cx + 9} y2={cy + 8} />
+            <line x1={cx - 9} y1={cy + 8} x2={cx + 9} y2={cy - 8} />
+          </g>
+        </g>
       ))}
+      {/* stage */}
+      <rect x="116" y="366" width="168" height="98" rx="6" fill="#5A3A52" />
+      <rect x="116" y="366" width="168" height="16" fill="#7A4A66" />
+      {/* drapes */}
+      {[134, 170, 230, 266].map((x, i) => (
+        <path key={i} d={`M${x} 382 q 8 40 0 82`} stroke="#C97A8E" strokeWidth="9" fill="none" opacity="0.75" strokeLinecap="round" />
+      ))}
+      {/* dancing couple on stage */}
+      <Couple x={200} y={372} s={0.74} fill="#F2D9A6" />
       {/* music notes */}
       <g fill="#FCE6B0" opacity="0.85">
         <circle cx="150" cy="250" r="5" /><rect x="154" y="226" width="2.5" height="26" />
@@ -218,7 +268,9 @@ function Nikah() {
         })}
       </g>
       {/* aisle */}
-      <path d="M170 533 L186 472 L214 472 L230 533 Z" fill="#F4ECE0" opacity="0.6" />
+      <path d="M168 533 L186 470 L214 470 L232 533 Z" fill="#F4ECE0" opacity="0.6" />
+      {/* couple under the arch */}
+      <Couple x={200} y={470} s={0.82} fill="#5A4636" />
     </>
   );
 }

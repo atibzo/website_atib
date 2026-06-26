@@ -14,18 +14,18 @@ export default function FloralBorder() {
       <Image
         src="/decor/floral-border.svg"
         alt=""
-        width={420}
-        height={260}
+        width={560}
+        height={360}
         priority
-        className="h-auto w-40 opacity-90 sm:w-64 md:w-80"
+        className="h-auto w-1/2 max-w-[420px]"
       />
       <Image
         src="/decor/floral-border.svg"
         alt=""
-        width={420}
-        height={260}
+        width={560}
+        height={360}
         priority
-        className="h-auto w-40 -scale-x-100 opacity-90 sm:w-64 md:w-80"
+        className="h-auto w-1/2 max-w-[420px] -scale-x-100"
       />
     </div>
   );
