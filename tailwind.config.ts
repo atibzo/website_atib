@@ -18,8 +18,8 @@ const config: Config = {
         teal: "#2E8B8B",
         "teal-deep": "#226A6E",
         seafoam: "#9FC8BE",
-        gold: "#B8923C",
-        "gold-soft": "#D2AE64",
+        gold: "#7E5E1C",
+        "gold-soft": "#A8852F",
         // legacy alias kept so existing class names resolve to the new warm accent
         rust: "#D05A3E",
         "rust-soft": "#E0856A",

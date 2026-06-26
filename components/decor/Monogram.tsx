@@ -29,8 +29,8 @@ export default function Monogram({
         fill="none"
         aria-hidden="true"
       >
-        <circle cx="50" cy="50" r="47" stroke="#B8923C" strokeWidth="0.8" opacity="0.9" />
-        <circle cx="50" cy="50" r="43" stroke="#CDA85B" strokeWidth="0.5" opacity="0.7" />
+        <circle cx="50" cy="50" r="47" stroke="#7E5E1C" strokeWidth="0.8" opacity="0.9" />
+        <circle cx="50" cy="50" r="43" stroke="#A8852F" strokeWidth="0.5" opacity="0.7" />
         {/* four cardinal dots */}
         {[0, 90, 180, 270].map((deg) => (
           <circle
@@ -38,7 +38,7 @@ export default function Monogram({
             cx="50"
             cy="3.5"
             r="1.3"
-            fill="#B8923C"
+            fill="#7E5E1C"
             transform={`rotate(${deg} 50 50)`}
           />
         ))}

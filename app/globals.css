@@ -39,7 +39,7 @@ body {
     display: inline-block;
     width: 56px;
     height: 1px;
-    background: linear-gradient(to right, transparent, #b8923c, transparent);
+    background: linear-gradient(to right, transparent, #8a6a1e, transparent);
     vertical-align: middle;
     margin: 0 14px;
   }
@@ -49,11 +49,11 @@ body {
 .gold-shimmer {
   background: linear-gradient(
     100deg,
-    #b8923c 0%,
-    #ecca74 22%,
-    #fff1c9 38%,
-    #cda85b 55%,
-    #b8923c 100%
+    #6e5016 0%,
+    #9a7726 25%,
+    #c9a24e 45%,
+    #8a6a1e 70%,
+    #6e5016 100%
   );
   background-size: 220% 100%;
   -webkit-background-clip: text;

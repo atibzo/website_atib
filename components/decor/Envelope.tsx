@@ -54,8 +54,8 @@ export default function Envelope({
           <path d="M398 2 L200 168" opacity="0.3" />
         </g>
         {/* gold hairline double border */}
-        <rect x="2" y="2" width="396" height="284" rx="12" stroke="#B8923C" strokeWidth="1.6" />
-        <rect x="9" y="9" width="382" height="270" rx="9" stroke="#CDA85B" strokeWidth="0.7" opacity="0.7" />
+        <rect x="2" y="2" width="396" height="284" rx="12" stroke="#7E5E1C" strokeWidth="1.6" />
+        <rect x="9" y="9" width="382" height="270" rx="9" stroke="#A8852F" strokeWidth="0.7" opacity="0.7" />
       </svg>
 
       {/* ── corner botanicals ── */}
@@ -81,8 +81,8 @@ export default function Envelope({
               <stop offset="100%" stopColor="#F1CDB0" />
             </linearGradient>
           </defs>
-          <polygon points="2,2 398,2 200,166" fill="url(#flap)" stroke="#B8923C" strokeWidth="1.6" />
-          <polygon points="12,6 388,6 200,156" fill="none" stroke="#CDA85B" strokeWidth="0.7" opacity="0.7" />
+          <polygon points="2,2 398,2 200,166" fill="url(#flap)" stroke="#7E5E1C" strokeWidth="1.6" />
+          <polygon points="12,6 388,6 200,156" fill="none" stroke="#A8852F" strokeWidth="0.7" opacity="0.7" />
         </svg>
       </div>
 
