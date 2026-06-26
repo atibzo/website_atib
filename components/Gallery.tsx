@@ -1,6 +1,3 @@
-"use client";
-
-import { useRef } from "react";
 import { siteConfig } from "@/config/site";
 import Reveal from "@/components/Reveal";
 import Media from "@/components/Media";
@@ -8,19 +5,11 @@ import Media from "@/components/Media";
 const { gallery } = siteConfig;
 
 /**
- * "Our Beautiful Moments" — a horizontal, scroll-snapping carousel of portrait
- * media cards with prev/next controls. Works as a plain scroll area on touch.
+ * "Our Beautiful Moments" — a featured triptych: the landscape highlight sits
+ * wide in the centre, flanked by the two portrait photos. Stacks on mobile
+ * (highlight first). Mark the centrepiece with `landscape: true` in config.
  */
 export default function Gallery() {
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  const scrollBy = (dir: 1 | -1) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const amount = track.clientWidth * 0.8 * dir;
-    track.scrollBy({ left: amount, behavior: "smooth" });
-  };
-
   return (
     <section
       id="moments"
@@ -32,59 +21,28 @@ export default function Gallery() {
         <p className="divider-star mt-5 text-gold">✦</p>
       </Reveal>
 
-      <Reveal delay={120} className="mt-12 w-full max-w-5xl">
-        <div className="relative">
-          <div
-            ref={trackRef}
-            className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {gallery.media.map((m, i) => (
+      <Reveal delay={120} className="mt-12 w-full max-w-6xl">
+        <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-7">
+          {gallery.media.map((m, i) =>
+            m.landscape ? (
+              // centred wide highlight
               <figure
                 key={i}
-                className={`relative flex-none snap-center overflow-hidden rounded-2xl bg-card shadow-card ring-1 ring-gold/30 ${
-                  m.landscape
-                    ? "aspect-[3/2] w-[86vw] max-w-[480px]"
-                    : "aspect-[3/4] w-[72vw] max-w-[320px] sm:w-[320px]"
-                }`}
+                className="relative order-first aspect-[3/2] w-[90vw] max-w-[560px] flex-none overflow-hidden rounded-2xl bg-card shadow-card ring-1 ring-gold/40 md:order-none md:w-[46%] md:max-w-[560px] md:scale-[1.04]"
               >
-                <Media media={m} priority={i === 0} />
+                <Media media={m} priority />
               </figure>
-            ))}
-          </div>
-
-          {/* controls */}
-          <button
-            type="button"
-            onClick={() => scrollBy(-1)}
-            aria-label="Previous moment"
-            className="absolute -left-2 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-card text-rust shadow-soft transition hover:bg-cream-deep focus:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:flex"
-          >
-            <Chevron dir="left" />
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollBy(1)}
-            aria-label="Next moment"
-            className="absolute -right-2 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-card text-rust shadow-soft transition hover:bg-cream-deep focus:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:flex"
-          >
-            <Chevron dir="right" />
-          </button>
+            ) : (
+              <figure
+                key={i}
+                className="relative aspect-[3/4] w-[64vw] max-w-[230px] flex-none overflow-hidden rounded-2xl bg-card shadow-soft ring-1 ring-gold/25 md:w-[24%]"
+              >
+                <Media media={m} />
+              </figure>
+            )
+          )}
         </div>
       </Reveal>
     </section>
-  );
-}
-
-function Chevron({ dir }: { dir: "left" | "right" }) {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d={dir === "left" ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"}
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }

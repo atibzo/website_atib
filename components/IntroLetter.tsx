@@ -48,6 +48,8 @@ export default function IntroLetter() {
 
   const open = () => {
     if (phase !== "closed") return;
+    // Start background music in the same user gesture (sound on).
+    window.dispatchEvent(new Event("intro:open"));
     setPhase("opening");
     // let the flap open, then dissolve to the invitation
     window.setTimeout(finish, reducedRef.current ? 250 : 1500);

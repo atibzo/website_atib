@@ -26,6 +26,23 @@ export default function MusicToggle() {
     return () => document.removeEventListener("visibilitychange", onHide);
   }, []);
 
+  // Start music when the guest opens the invitation ("Tap to open"). The event
+  // is dispatched synchronously from that click, so play() counts as a user
+  // gesture and is allowed (with sound on).
+  useEffect(() => {
+    const onStart = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      audio.muted = false;
+      audio
+        .play()
+        .then(() => setPlaying(true))
+        .catch(() => setAvailable(false));
+    };
+    window.addEventListener("intro:open", onStart);
+    return () => window.removeEventListener("intro:open", onStart);
+  }, []);
+
   const toggle = async () => {
     const audio = audioRef.current;
     if (!audio) return;
