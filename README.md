@@ -72,29 +72,42 @@ spreadsheet you own.
 2. In the Sheet: **Extensions ▸ Apps Script**. Replace the code with:
 
    ```javascript
-   function doPost(e) {
-     const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-     const p = e.parameter;
-     sheet.appendRow([
-       p.submittedAt || new Date().toISOString(),
-       p.name || "",
-       p.phone || "",
-       p.attending || "",
-       p.adults || "",
-       p.children || "",
-       p.childAges || "",
-       p.events || "",
-       p.note || "",
-     ]);
-     return ContentService
-       .createTextOutput(JSON.stringify({ result: "success" }))
-       .setMimeType(ContentService.MimeType.JSON);
+   // Records both POST (from the form) and GET (so visiting the /exec URL in a
+   // browser writes a labelled test row — a quick way to confirm it works).
+   function doPost(e) { return record(e); }
+   function doGet(e)  { return record(e); }
+
+   function record(e) {
+     try {
+       const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+       const p = (e && e.parameter) ? e.parameter : {};
+       sheet.appendRow([
+         p.submittedAt || new Date().toISOString(),
+         p.name || "(browser test)",
+         p.phone || "",
+         p.attending || "",
+         p.adults || "",
+         p.children || "",
+         p.childAges || "",
+         p.events || "",
+         p.note || "",
+       ]);
+       return ContentService
+         .createTextOutput(JSON.stringify({ result: "success" }))
+         .setMimeType(ContentService.MimeType.JSON);
+     } catch (err) {
+       return ContentService
+         .createTextOutput(JSON.stringify({ result: "error", error: String(err) }))
+         .setMimeType(ContentService.MimeType.JSON);
+     }
    }
    ```
 
 3. **Deploy ▸ New deployment ▸ Web app.** Set *Execute as* **Me**, *Who has
    access* **Anyone**. Authorize when prompted. Copy the **Web app URL**
-   (ends in `/exec`).
+   (ends in `/exec`). **If you edit the code later, you must redeploy a new
+   version:** Deploy ▸ Manage deployments ▸ ✏️ edit ▸ Version: **New version**
+   ▸ Deploy — otherwise the old code keeps running on the same URL.
 4. Point the site at the URL — either way works (the `/exec` URL is a public
    endpoint, not a secret):
    - **Simplest:** paste it into `config/site.ts` → `rsvp.endpoint: "…/exec"`,
@@ -109,6 +122,22 @@ first) so the RSVP sheet lives in your personal Drive.
 The form submits with `mode: "no-cors"`, so the browser can't read the
 response — a non-throwing request is treated as success. Test by submitting and
 checking that a row appears in your Sheet.
+
+### Troubleshooting (no rows arriving)
+
+Because of `no-cors`, the form always shows "Thank you" even if the write fails,
+so debug from the Google side:
+
+1. **Paste the `/exec` URL straight into a browser address bar.** With the
+   `doGet` above, a working deployment appends a `(browser test)` row to your
+   Sheet and shows `{"result":"success"}`.
+   - Instead see a **Google sign-in / "you need access" page** → *Who has
+     access* isn't **Anyone**. Redeploy (step 3) with Anyone.
+   - See **"Script function not found"** or a stale page → you didn't deploy the
+     new code as a **New version** (step 3 note).
+2. If the browser test writes a row but the **live website** doesn't, the site
+   you tested didn't have the endpoint baked in yet — confirm Vercel
+   redeployed the latest commit, then hard-refresh and submit again.
 
 ## Deploy to Vercel
 
