@@ -4,31 +4,26 @@ import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import Envelope from "@/components/decor/Envelope";
 
-type Phase = "closed" | "opening" | "playing";
+type Phase = "closed" | "opening";
 
 /**
- * "Goa Sunset" letter intro. A crafted envelope sits on a warm wash; on tap the
- * flap opens (CSS 3D), the video plays underneath, then the whole overlay
- * dissolves into the invitation.
+ * "Goa Sunset" letter intro — a single animation. A crafted envelope sits on a
+ * warm wash; on tap the flap opens (CSS 3D) and the whole overlay dissolves to
+ * reveal the invitation. No video.
  *
- * Flow: closed → opening (flap rotates, video.play() fired in the same gesture
- * so audio is unblocked) → playing (cross-fade to full-screen video) → dismiss
- * on `ended`/skip. The first real section (#invitation) sits behind this fixed
- * overlay, so dismissal is a true cross-fade. Scroll is locked while open.
+ * The first real section (#invitation) sits behind this fixed overlay, so
+ * dismissal is a true cross-fade. Scroll is locked while open.
  */
 export default function IntroLetter() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [phase, setPhase] = useState<Phase>("closed");
   const [closing, setClosing] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  const [playFailed, setPlayFailed] = useState(false);
   const reducedRef = useRef(false);
 
   useEffect(() => {
     reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }, []);
 
-  // Lock body scroll while visible.
   useEffect(() => {
     if (dismissed) return;
     const prev = document.body.style.overflow;
@@ -38,7 +33,6 @@ export default function IntroLetter() {
     };
   }, [dismissed]);
 
-  // Escape skips (accessible).
   useEffect(() => {
     if (dismissed) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && finish();
@@ -52,25 +46,11 @@ export default function IntroLetter() {
     window.setTimeout(() => setDismissed(true), 750);
   };
 
-  const open = async () => {
+  const open = () => {
     if (phase !== "closed") return;
     setPhase("opening");
-    const video = videoRef.current;
-    let canPlay = false;
-    if (video) {
-      try {
-        video.muted = false;
-        await video.play();
-        canPlay = true;
-      } catch {
-        setPlayFailed(true);
-      }
-    }
-    const delay = reducedRef.current ? 60 : 1150;
-    window.setTimeout(() => {
-      if (canPlay) setPhase("playing");
-      else finish(); // can't play (codec/autoplay) → dissolve to invitation
-    }, delay);
+    // let the flap open, then dissolve to the invitation
+    window.setTimeout(finish, reducedRef.current ? 250 : 1500);
   };
 
   const onOverlayClick = () => {
@@ -79,8 +59,6 @@ export default function IntroLetter() {
   };
 
   if (dismissed) return null;
-
-  const showEnvelope = phase !== "playing";
 
   return (
     <div
@@ -95,38 +73,18 @@ export default function IntroLetter() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 80% at 50% 8%, #FDEBD2 0%, #F7D9BE 42%, #EFC4AD 78%, #E9B7A4 100%)",
+            "radial-gradient(120% 80% at 50% 8%, #FDEBD2 0%, #F7D9BE 40%, #EFC4AD 72%, #E7B9A6 100%)",
         }}
       />
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(40% 30% at 50% 14%, rgba(255,236,196,0.9), transparent 70%)",
+            "radial-gradient(38% 28% at 50% 14%, rgba(255,236,196,0.9), transparent 70%)",
         }}
       />
 
-      {/* full-screen video (revealed on play) */}
-      <video
-        ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
-        style={{ opacity: phase === "playing" ? 1 : 0 }}
-        src={siteConfig.intro.video}
-        poster={siteConfig.intro.poster}
-        playsInline
-        preload="auto"
-        onEnded={finish}
-        disablePictureInPicture
-      />
-
-      {/* envelope + wordmark + cue */}
-      <div
-        className="relative z-10 flex animate-fade-up flex-col items-center transition-opacity duration-700"
-        style={{
-          opacity: showEnvelope ? 1 : 0,
-          pointerEvents: showEnvelope ? "auto" : "none",
-        }}
-      >
+      <div className="relative z-10 flex animate-fade-up flex-col items-center px-4">
         <div style={{ perspective: 1400 }}>
           <div className={phase === "closed" ? "float-soft" : ""}>
             <Envelope open={phase !== "closed"} width={380} />
@@ -135,15 +93,15 @@ export default function IntroLetter() {
 
         {/* wordmark */}
         <div className="mt-10 flex flex-col items-center gap-2">
-          <p className="gold-shimmer font-serif text-2xl uppercase tracking-[0.4em] sm:text-3xl">
+          <p className="gold-shimmer font-script text-5xl leading-none sm:text-6xl">
             {siteConfig.couple.groom.firstName} &amp; {siteConfig.couple.bride.firstName}
           </p>
-          <div className="flex items-center gap-3 text-gold/70">
+          <div className="mt-1 flex items-center gap-3 text-gold/70">
             <span className="h-px w-10 bg-gold/50" />
             <span aria-hidden>✦</span>
             <span className="h-px w-10 bg-gold/50" />
           </div>
-          <p className="font-serif text-xs uppercase tracking-[0.35em] text-ink-soft">
+          <p className="font-sans text-xs uppercase tracking-[0.4em] text-teal-deep">
             Goa · October 2026
           </p>
         </div>
@@ -157,13 +115,13 @@ export default function IntroLetter() {
               open();
             }}
             aria-label={`${siteConfig.intro.openLabel} — open the invitation`}
-            className="group mt-8 inline-flex items-center gap-2 rounded-full border border-gold/50 bg-card/70 px-5 py-2 font-serif text-sm uppercase tracking-[0.3em] text-rust shadow-soft backdrop-blur transition hover:bg-card focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+            className="group mt-8 inline-flex items-center gap-2 rounded-full border border-gold/50 bg-card/70 px-5 py-2 font-sans text-sm uppercase tracking-[0.3em] text-coral shadow-soft backdrop-blur transition hover:bg-card focus:outline-none focus-visible:ring-2 focus-visible:ring-teal"
           >
             <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rust/50" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-rust" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-coral/50" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-coral" />
             </span>
-            {playFailed ? "Tap to enter" : siteConfig.intro.openLabel}
+            {siteConfig.intro.openLabel}
           </button>
         )}
       </div>

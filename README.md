@@ -3,13 +3,13 @@
 An elegant, animated wedding invitation site built with **Next.js (App Router) +
 TypeScript + Tailwind CSS**, ready to deploy on Vercel.
 
-It opens on a **tap-to-open letter video** — the closed letter plays open when
-tapped, then dissolves into the invitation (a **Bismillah** invocation with the
-couple's names), a
-scratch-to-reveal **Save the Date**, a **moments** carousel, the **Sacred
-Ceremonies** schedule (Nikah & Sangeet), and an **RSVP** form that writes to a
-Google Sheet. Floating petals, gold corner frames, a watercolour floral border,
-and a background-music toggle complete the aesthetic.
+It opens on a **tap-to-open envelope** — a crafted "Goa Sunset" letter with the
+A&S monogram; tap it and the flap opens, then it dissolves into the invitation
+(a **Bismillah** invocation with the couple's names), a scratch-to-reveal **Save
+the Date**, a **moments** carousel, the **Sacred Ceremonies** schedule (Ameen &
+Haldi · Sangeet · Nikah) with illustrated event cards, and an **RSVP** form that
+writes to a Google Sheet. Floating petals, gold corner frames, a watercolour
+floral border, and a background-music toggle complete the aesthetic.
 
 ## Quick start
 
@@ -31,9 +31,8 @@ Drop files into `public/` and point `config/site.ts` at them:
 
 | What | Where | Config field |
 | --- | --- | --- |
-| Intro letter video | `public/media/a-sacred-union.mp4` | `intro.video` |
 | Gallery photos/videos | `public/media/…` | `gallery.media[]` |
-| Event invitation videos/images | `public/media/…` | `events.list[].media` |
+| Event card photo/video (overrides illustration) | `public/media/…` | `events.list[].media` |
 | Background music | `public/audio/background.mp3` | `music.src` |
 | Emblem (crescent & star) | `public/decor/bismillah.svg` | `invitation.emblem` |
 | Floral top border | `public/decor/floral-border.svg` | (used by Hero) |
@@ -47,22 +46,21 @@ Media items use this shape:
 { type: "video" | "image", src: "/media/your-file.mp4", poster: "/decor/poster.svg", alt: "…" }
 ```
 
-### About the intro video
+### About the intro
 
-The intro is **tap-to-open**: the closed letter (the video paused at its first
-frame, over `intro.poster`) shows a "tap to open" cue; on tap the clip plays the
-unfold with its own audio, then the overlay dissolves into the invitation. Tap
-again (or press `Escape`) to skip; under `prefers-reduced-motion` the intro is
-skipped entirely.
+The intro is a single, self-contained animation — no video. A crafted SVG/CSS
+envelope (`components/decor/Envelope.tsx` + `Monogram.tsx`) shows a "tap to open"
+cue; on tap the flap opens in 3D and the overlay dissolves into the invitation.
+Tap again (or press `Escape`) to skip; under `prefers-reduced-motion` it opens
+and dissolves immediately.
 
-Optional: encode the MP4 with `+faststart` so playback can begin before the
-whole file downloads (the `moov` atom moves to the front):
+### Event card illustrations
 
-```bash
-ffmpeg -i input.mp4 -movflags +faststart -c copy public/media/a-sacred-union.mp4
-```
-
-(The site works without this; it only reduces start latency.)
+Each ceremony card uses a bespoke vector scene in
+`components/decor/EventScene.tsx` (`haldi` / `sangeet` / `nikah`), selected per
+event via `events.list[].illustration`. To use a real photo/render instead, set
+that event's `media` (`{ type, src, alt }`) — it takes precedence over the
+illustration.
 
 ## RSVP → Google Sheet
 
@@ -113,8 +111,8 @@ auto-detected). Add the `NEXT_PUBLIC_RSVP_ENDPOINT` env var. Done.
 ## Tech notes
 
 - Content-driven via `config/site.ts` (single source of truth).
-- Fonts via `next/font/google`: Great Vibes, Yellowtail, Cormorant Garamond,
-  Amiri (Arabic).
+- Fonts via `next/font/google`: Pinyon Script (names), Fraunces (headings),
+  Cormorant Garamond (body), Jost (labels), Amiri (Arabic).
 - Scroll-reveal uses `IntersectionObserver` (`components/Reveal.tsx`); the
   scratch cards share one canvas component (`components/ScratchCard.tsx`).
 - All animations respect `prefers-reduced-motion`.

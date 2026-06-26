@@ -28,7 +28,9 @@ export type WeddingEvent = {
   time: string; // "8:00 PM Onwards"
   venue: string;
   mapUrl?: string;
-  /** Optional invitation media (vertical card). Falls back to a styled card. */
+  /** Bespoke illustrated scene for the card. */
+  illustration?: "haldi" | "sangeet" | "nikah";
+  /** Optional real photo/video; if set, used instead of the illustration. */
   media?: Media;
   blessing?: string;
 };
@@ -39,22 +41,20 @@ export const siteConfig = {
     groom: {
       firstName: "Atib",
       lastName: "Shaikh",
-      // TODO: replace with the real names of the groom's parents.
-      parents: "Son of Mr. [Father’s Name] Shaikh & Mrs. [Mother’s Name]",
+      parents: "Son of Mr. Mohmadasif Shaikh & Mrs. Rafatnaim Shaikh",
       grandparents: "",
     },
     bride: {
       firstName: "Sana",
       lastName: "Anjum",
-      // TODO: replace with the real names of the bride's parents.
-      parents: "Daughter of Mr. [Father’s Name] & Mrs. [Mother’s Name]",
+      parents: "Daughter of Mr. Kamal Anjum & Mrs. Shahin Naz",
       grandparents: "",
     },
   },
 
   // ── The wedding date (used by Save-the-Date + countdown maths) ────────────
   // ISO 8601, local time of the main ceremony (the Nikah).
-  weddingDate: "2026-10-02T18:00:00+05:30",
+  weddingDate: "2026-10-03T15:00:00+05:30",
   hashtag: "#AtibWedsSana",
 
   // ── Invitation / hero card ────────────────────────────────────────────────
@@ -72,10 +72,8 @@ export const siteConfig = {
   // ── Intro: scroll-unfold letter video ─────────────────────────────────────
   // The site opens on this video; scrolling scrubs it open like a letter.
   intro: {
-    video: "/media/a-sacred-union.mp4",
-    // Shown as the "closed letter" before the guest opens it.
-    poster: "/decor/intro-poster.svg",
-    // Cue inviting the guest to open the letter.
+    // The intro is a single animation: the envelope opens, then dissolves to
+    // the invitation. (No video.)
     openLabel: "Tap to open",
   },
 
@@ -86,7 +84,7 @@ export const siteConfig = {
     instruction: "Scratch the hearts to reveal",
     // One reveal per heart (left → right).
     hearts: [
-      { hint: "Day", value: "02" },
+      { hint: "Day", value: "03" },
       { hint: "Month", value: "OCT" },
       { hint: "Year", value: "2026" },
     ],
@@ -98,12 +96,7 @@ export const siteConfig = {
     heading: "Our Beautiful Moments",
     // Add the couple's photos/videos here. Placeholders ship by default.
     media: [
-      {
-        type: "video",
-        src: "/media/a-sacred-union.mp4",
-        poster: "/decor/moment-1.svg",
-        alt: "Atib & Sana — A Sacred Union",
-      },
+      { type: "image", src: "/decor/moment-1.svg", alt: "A beautiful moment" },
       { type: "image", src: "/decor/moment-2.svg", alt: "A cherished moment" },
       { type: "image", src: "/decor/moment-3.svg", alt: "Together" },
     ] as Media[],
@@ -116,29 +109,42 @@ export const siteConfig = {
     list: [
       {
         dateLabel: "02ND OCTOBER, 2026",
-        name: "Nikah",
+        name: "Ameen & Haldi",
         dayName: "Friday",
         dateNum: "02",
         month: "October",
         year: "2026",
-        // TODO: confirm the ceremony time.
-        time: "Time to be announced",
-        venue: "Regenta Beach House Resort, Goa",
-        mapUrl: "https://maps.google.com/?q=Regenta+Beach+House+Resort+Goa",
-        blessing: "Two souls, one sacred promise — witnessed with love & duas.",
+        time: "1:00 PM Onwards",
+        venue: "Regenta Baywatch Resort, Goa",
+        mapUrl: "https://maps.google.com/?q=Regenta+Baywatch+Resort+Goa",
+        illustration: "haldi",
+        blessing: "Blessings, turmeric & golden beginnings.",
+      },
+      {
+        dateLabel: "02ND OCTOBER, 2026",
+        name: "Sangeet",
+        dayName: "Friday",
+        dateNum: "02",
+        month: "October",
+        year: "2026",
+        time: "7:00 PM Onwards",
+        venue: "Regenta Baywatch Resort, Goa",
+        mapUrl: "https://maps.google.com/?q=Regenta+Baywatch+Resort+Goa",
+        illustration: "sangeet",
+        blessing: "An evening of music, dance & celebration.",
       },
       {
         dateLabel: "03RD OCTOBER, 2026",
-        name: "Sangeet",
+        name: "Nikah",
         dayName: "Saturday",
         dateNum: "03",
         month: "October",
         year: "2026",
-        // TODO: confirm the ceremony time.
-        time: "Time to be announced",
-        venue: "Regenta Baywatch Resort, Goa",
-        mapUrl: "https://maps.google.com/?q=Regenta+Baywatch+Resort+Goa",
-        blessing: "An evening of music, dance & celebration.",
+        time: "3:00 PM Onwards",
+        venue: "Regenta Beach House, Goa — Beach Lawns",
+        mapUrl: "https://maps.google.com/?q=Regenta+Beach+House+Goa",
+        illustration: "nikah",
+        blessing: "Two souls, one sacred promise — witnessed with love & duas.",
       },
     ] as WeddingEvent[],
   },

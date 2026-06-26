@@ -66,7 +66,7 @@ export default function Rsvp() {
       <Reveal delay={120} className="mt-10 w-full max-w-xl">
         {status === "sent" ? (
           <div className="rounded-2xl bg-card px-8 py-12 shadow-card">
-            <p className="font-brush text-4xl text-rust">Thank you!</p>
+            <p className="font-display italic text-4xl text-coral">Thank you!</p>
             <p className="mt-3 font-serif text-lg text-ink">
               Your RSVP has been received. We can’t wait to celebrate with you.
             </p>
@@ -118,7 +118,7 @@ export default function Rsvp() {
             </Field>
 
             <fieldset className="mt-5">
-              <legend className="mb-2 font-serif text-sm uppercase tracking-[0.2em] text-ink-soft">
+              <legend className="mb-2 font-sans text-xs uppercase tracking-[0.25em] text-ink-soft">
                 Events you’ll join
               </legend>
               <div className="flex flex-wrap gap-4">
@@ -157,7 +157,7 @@ export default function Rsvp() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="mt-7 w-full rounded-full bg-rust py-3 font-serif text-lg uppercase tracking-[0.2em] text-cream transition hover:bg-rust-soft disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+              className="mt-7 w-full rounded-full bg-coral py-3 font-sans text-base uppercase tracking-[0.25em] text-cream transition hover:bg-coral-soft disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
             >
               {status === "sending" ? "Sending…" : "Send RSVP"}
             </button>
@@ -202,7 +202,7 @@ function Field({
 }) {
   return (
     <label htmlFor={htmlFor} className="mt-5 block">
-      <span className="mb-1.5 block font-serif text-sm uppercase tracking-[0.2em] text-ink-soft">
+      <span className="mb-1.5 block font-sans text-xs uppercase tracking-[0.25em] text-ink-soft">
         {label}
       </span>
       {children}

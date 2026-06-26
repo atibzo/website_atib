@@ -1,6 +1,7 @@
 import { siteConfig, type WeddingEvent } from "@/config/site";
 import Reveal from "@/components/Reveal";
 import Media from "@/components/Media";
+import EventScene from "@/components/decor/EventScene";
 
 const { events } = siteConfig;
 
@@ -34,13 +35,17 @@ function EventBlock({ event, index }: { event: WeddingEvent; index: number }) {
     <Reveal>
       <div className="flex flex-col items-center">
         <p className="eyebrow text-ink-soft">{event.dateLabel}</p>
-        <h3 className="mt-2 font-brush text-4xl text-rust sm:text-5xl">
+        <h3 className="mt-2 font-display italic text-4xl text-coral sm:text-5xl">
           {event.name}
         </h3>
 
-        {event.media && (
-          <figure className="relative mx-auto mt-8 aspect-[3/4] w-[78vw] max-w-[340px] overflow-hidden rounded-2xl bg-card shadow-card">
-            <Media media={event.media} priority={index === 0} />
+        {(event.media || event.illustration) && (
+          <figure className="relative mx-auto mt-8 aspect-[3/4] w-[78vw] max-w-[340px] overflow-hidden rounded-2xl bg-card shadow-card ring-1 ring-gold/30">
+            {event.media ? (
+              <Media media={event.media} priority={index === 0} />
+            ) : (
+              <EventScene variant={event.illustration!} />
+            )}
           </figure>
         )}
 
@@ -48,7 +53,7 @@ function EventBlock({ event, index }: { event: WeddingEvent; index: number }) {
         <div className="mt-8 flex items-center justify-center gap-4 font-serif text-ink">
           <span className="text-lg">{event.dayName}</span>
           <span className="h-px w-8 bg-gold/50" />
-          <span className="font-brush text-5xl text-rust">{event.dateNum}</span>
+          <span className="font-display italic text-5xl text-coral">{event.dateNum}</span>
           <span className="h-px w-8 bg-gold/50" />
           <span className="text-lg">
             {event.month} {event.year}

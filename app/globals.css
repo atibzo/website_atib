@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --bg: #fbf4ec;
+  --bg: #fbf3e9;
 }
 
 html {
@@ -12,12 +12,12 @@ html {
 
 body {
   background-color: var(--bg);
-  color: #5b4a42;
-  /* Warm watercolour wash so the page never reads as flat cream. */
+  color: #4e443c;
+  /* Sunset-coral-&-teal wash: warm sand top, coral glow, teal at the foot. */
   background-image:
-    radial-gradient(1200px 600px at 50% -10%, rgba(201, 122, 82, 0.12), transparent 60%),
-    radial-gradient(900px 500px at 100% 100%, rgba(184, 146, 60, 0.1), transparent 55%),
-    radial-gradient(900px 500px at 0% 90%, rgba(188, 88, 54, 0.08), transparent 55%);
+    radial-gradient(1100px 600px at 50% -8%, rgba(224, 101, 75, 0.12), transparent 60%),
+    radial-gradient(900px 520px at 100% 12%, rgba(184, 146, 60, 0.1), transparent 55%),
+    radial-gradient(1000px 600px at 0% 100%, rgba(46, 139, 139, 0.1), transparent 58%);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
 }
@@ -25,12 +25,12 @@ body {
 @layer components {
   /* Small, letter-spaced section eyebrow ("SAVE THE DATE", "A GLIMPSE OF US") */
   .eyebrow {
-    @apply font-serif uppercase tracking-[0.4em] text-gold text-xs sm:text-sm;
+    @apply font-sans font-medium uppercase tracking-[0.42em] text-teal text-xs sm:text-sm;
   }
 
-  /* Rust brush-script section heading */
+  /* High-contrast serif section heading */
   .heading-script {
-    @apply font-brush text-rust leading-[1.05] text-5xl sm:text-6xl md:text-7xl;
+    @apply font-display italic font-medium text-coral leading-[1.05] text-5xl sm:text-6xl md:text-7xl;
   }
 
   .divider-star::before,

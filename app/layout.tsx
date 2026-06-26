@@ -1,22 +1,23 @@
 import type { Metadata } from "next";
-import { Great_Vibes, Yellowtail, Cormorant_Garamond, Amiri } from "next/font/google";
+import { Pinyon_Script, Fraunces, Cormorant_Garamond, Jost, Amiri } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import Petals from "@/components/decor/Petals";
 import CornerFrame from "@/components/decor/CornerFrame";
 import MusicToggle from "@/components/MusicToggle";
 
-const script = Great_Vibes({
+const script = Pinyon_Script({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-script",
   display: "swap",
 });
 
-const brush = Yellowtail({
-  weight: "400",
+const display = Fraunces({
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
-  variable: "--font-brush",
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -25,6 +26,13 @@ const serif = Cormorant_Garamond({
   style: ["normal", "italic"],
   subsets: ["latin"],
   variable: "--font-serif",
+  display: "swap",
+});
+
+const sans = Jost({
+  weight: ["300", "400", "500"],
+  subsets: ["latin"],
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -48,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${script.variable} ${brush.variable} ${serif.variable} ${arabic.variable}`}
+      className={`${script.variable} ${display.variable} ${serif.variable} ${sans.variable} ${arabic.variable}`}
     >
       <body className="font-serif antialiased overflow-x-hidden">
         {/* Global decorative layers */}

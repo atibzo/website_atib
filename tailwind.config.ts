@@ -9,22 +9,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#FBF4EC",
-        "cream-deep": "#F5E9DC",
-        rust: "#BC5836",
-        "rust-soft": "#C97A52",
+        // ── Sunset Coral & Teal ──────────────────────────────────────────
+        cream: "#FBF3E9",
+        "cream-deep": "#F4E6D4",
+        sand: "#F1E0C6",
+        coral: "#E0654B",
+        "coral-soft": "#EC8C6E",
+        teal: "#2E8B8B",
+        "teal-deep": "#226A6E",
+        seafoam: "#9FC8BE",
         gold: "#B8923C",
-        "gold-soft": "#CDA85B",
-        sanskrit: "#B5533A",
-        ink: "#5B4A42",
+        "gold-soft": "#D2AE64",
+        // legacy alias kept so existing class names resolve to the new warm accent
+        rust: "#D05A3E",
+        "rust-soft": "#E0856A",
+        sanskrit: "#C0563B",
+        ink: "#4E443C",
         "ink-soft": "#7A675D",
-        card: "#FFFDFA",
+        card: "#FFFDF8",
       },
       fontFamily: {
         // Bound to next/font CSS variables defined in app/layout.tsx
         script: ["var(--font-script)", "cursive"],
-        brush: ["var(--font-brush)", "cursive"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+        // legacy alias → display, so any leftover font-brush still resolves
+        brush: ["var(--font-display)", "cursive"],
         serif: ["var(--font-serif)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
         arabic: ["var(--font-arabic)", "serif"],
       },
       boxShadow: {

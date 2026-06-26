@@ -15,7 +15,7 @@ export default function ScratchCard({
   width = 168,
   height = 156,
   shapePath = "M84,150 C18,104 6,56 36,34 C58,18 80,28 84,50 C88,28 110,18 132,34 C162,56 150,104 84,150 Z",
-  foreground = "#BC5836",
+  foreground = "#D05A3E",
   label = "SCRATCH",
   children,
 }: {
