@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Pinyon_Script, Fraunces, Cormorant_Garamond, Jost, Amiri } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
-import Petals from "@/components/decor/Petals";
-import CornerFrame from "@/components/decor/CornerFrame";
-import MusicToggle from "@/components/MusicToggle";
 
 const script = Pinyon_Script({
   weight: "400",
@@ -59,11 +56,7 @@ export default function RootLayout({
       className={`${script.variable} ${display.variable} ${serif.variable} ${sans.variable} ${arabic.variable}`}
     >
       <body className="font-serif antialiased overflow-x-hidden">
-        {/* Global decorative layers */}
-        <Petals />
-        <CornerFrame />
         {children}
-        <MusicToggle />
       </body>
     </html>
   );

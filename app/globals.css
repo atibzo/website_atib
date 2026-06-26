@@ -92,6 +92,36 @@ body {
   }
 }
 
+/* ── PDF invite booklet (route /invite) ──────────────────────────────────── */
+.invite-doc {
+  background: #fff;
+}
+.invite-page {
+  position: relative;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  overflow: hidden;
+  break-after: page;
+  page-break-after: always;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.invite-page:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
