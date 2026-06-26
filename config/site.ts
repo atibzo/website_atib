@@ -101,9 +101,9 @@ export const siteConfig = {
     // public/media/README.md). Portrait images use tall cards; set
     // `landscape: true` for wide/group photos so they aren't cropped.
     media: [
-      { type: "image", src: "/media/moment-1.jpg", alt: "Atib & Sana — ring ceremony" },
-      { type: "image", src: "/media/moment-2.jpg", alt: "Atib & Sana" },
-      { type: "image", src: "/media/moment-3.jpg", alt: "Family", landscape: true },
+      { type: "image", src: "/media/moment-1.jpeg", alt: "Atib & Sana — ring ceremony" },
+      { type: "image", src: "/media/moment-2.png", alt: "Atib & Sana" },
+      { type: "image", src: "/media/moment-3.png", alt: "Family", landscape: true },
     ] as Media[],
   },
 
