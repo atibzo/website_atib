@@ -162,11 +162,11 @@ export const siteConfig = {
     heading: "Will You Join Us?",
     intro:
       "Your presence would make our celebration complete. Kindly let us know by the date below.",
-    // TODO: set your RSVP deadline.
-    deadline: "15th September, 2026",
+    deadline: "30th August, 2026",
     // Paste your Google Apps Script Web App "/exec" URL here to record RSVPs.
     // (Takes effect if NEXT_PUBLIC_RSVP_ENDPOINT env var is not set.)
-    endpoint: "",
+    endpoint:
+      "https://script.google.com/macros/s/AKfycbybBbbSOUNYWfR1miMoCgJEwPDS_OfcMjUl64N88BX9Zh0XwzpcFQhNzhdblSOyaPjMkA/exec",
   },
 
   // ── Background music ──────────────────────────────────────────────────────
