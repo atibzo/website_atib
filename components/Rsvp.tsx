@@ -96,14 +96,16 @@ export default function Rsvp() {
               />
             </Field>
 
-            <Field label="Email" htmlFor="email">
+            <Field label="Mobile number" htmlFor="phone">
               <input
-                id="email"
-                name="email"
-                type="email"
+                id="phone"
+                name="phone"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
                 required
                 className="rsvp-input"
-                placeholder="you@example.com"
+                placeholder="+91 98765 43210"
               />
             </Field>
 
@@ -170,26 +172,6 @@ export default function Rsvp() {
                 </div>
               </fieldset>
             )}
-
-            <fieldset className="mt-5">
-              <legend className="mb-2 font-sans text-xs uppercase tracking-[0.25em] text-ink-soft">
-                Do you require stay?
-              </legend>
-              <div className="flex gap-6">
-                {["Yes", "No"].map((opt) => (
-                  <label key={opt} className="flex items-center gap-2 font-serif text-ink">
-                    <input
-                      type="radio"
-                      name="stay"
-                      value={opt}
-                      defaultChecked={opt === "No"}
-                      className="h-4 w-4 accent-coral"
-                    />
-                    {opt}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
 
             <fieldset className="mt-5">
               <legend className="mb-2 font-sans text-xs uppercase tracking-[0.25em] text-ink-soft">
