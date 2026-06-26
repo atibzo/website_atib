@@ -19,7 +19,7 @@ export default function Footer() {
         <p className="mx-auto mt-6 max-w-md font-serif text-base text-ink-soft">
           {footer.thankYou}
         </p>
-        <p className="mt-6 font-serif text-sm uppercase tracking-[0.3em] text-rust">
+        <p className="mt-6 font-sans text-base tracking-[0.06em] text-coral">
           {hashtag}
         </p>
       </Reveal>

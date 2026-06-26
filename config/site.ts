@@ -55,7 +55,7 @@ export const siteConfig = {
   // ── The wedding date (used by Save-the-Date + countdown maths) ────────────
   // ISO 8601, local time of the main ceremony (the Nikah).
   weddingDate: "2026-10-03T15:00:00+05:30",
-  hashtag: "#AtibWedsSana",
+  hashtag: "#BeachpleaseItsSanaAtib",
 
   // ── Invitation / hero card ────────────────────────────────────────────────
   invitation: {
@@ -115,7 +115,7 @@ export const siteConfig = {
         month: "October",
         year: "2026",
         time: "1:00 PM Onwards",
-        venue: "Regenta Baywatch Resort, Goa",
+        venue: "Regenta Baywatch Resort — Poolside Area, Goa",
         mapUrl: "https://maps.google.com/?q=Regenta+Baywatch+Resort+Goa",
         illustration: "haldi",
         blessing: "Blessings, turmeric & golden beginnings.",

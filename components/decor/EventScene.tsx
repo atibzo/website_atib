@@ -97,22 +97,34 @@ function Haldi() {
           <stop offset="55%" stopColor="#F8D89A" />
           <stop offset="100%" stopColor="#F2C088" />
         </linearGradient>
-        <linearGradient id="h-sea" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#7FBFB6" />
-          <stop offset="100%" stopColor="#A9D2C6" />
+        <linearGradient id="h-pool" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#3FA7A0" />
+          <stop offset="100%" stopColor="#79C8BF" />
         </linearGradient>
       </defs>
       <rect width="400" height="533" fill="url(#h-sky)" />
       {/* sun */}
       <circle cx="300" cy="120" r="46" fill="#FBE7A6" opacity="0.85" />
       <circle cx="300" cy="120" r="30" fill="#F8D77A" />
-      {/* sea + sand */}
-      <rect y="360" width="400" height="60" fill="url(#h-sea)" />
-      <path d="M0 408 Q 200 388 400 408 L400 533 L0 533 Z" fill="#EAD4A8" />
-      <path d="M0 470 Q 200 452 400 470 L400 533 L0 533 Z" fill="#E2C795" />
-      {/* palms */}
-      <Palm x={70} y={420} s={1.1} fill="#4A7A63" />
-      <Palm x={350} y={430} s={1.3} flip fill="#3C6B5D" />
+      {/* palms (behind the pool) */}
+      <Palm x={64} y={430} s={1.1} fill="#4A7A63" />
+      <Palm x={356} y={438} s={1.3} flip fill="#3C6B5D" />
+      {/* poolside deck */}
+      <rect y="356" width="400" height="177" fill="#E9D6B4" />
+      <rect y="356" width="400" height="9" fill="#D8C098" opacity="0.6" />
+      {/* swimming pool with tiled rim */}
+      <rect x="34" y="372" width="332" height="92" rx="14" fill="#CFE7DF" />
+      <rect x="40" y="378" width="320" height="80" rx="10" fill="url(#h-pool)" />
+      {/* ripples */}
+      <g stroke="#EAF6F1" strokeWidth="2" opacity="0.6" strokeLinecap="round" fill="none">
+        <path d="M64 404 q 16 -6 32 0 t 32 0" />
+        <path d="M214 420 q 16 -6 32 0 t 32 0" />
+        <path d="M120 440 q 16 -6 32 0 t 32 0" />
+      </g>
+      {/* marigold petals floating on the water */}
+      <Marigold x={92} y={410} r={6} c="#F0A93B" />
+      <Marigold x={300} y={398} r={6} c="#E68A2E" />
+      <Marigold x={250} y={440} r={5} c="#F0A93B" />
       {/* marigold garland (toran) */}
       <path d="M0 64 Q 200 130 400 64" fill="none" stroke="#5C8A4A" strokeWidth="3" />
       {Array.from({ length: 13 }).map((_, i) => {

@@ -39,11 +39,11 @@ e-invitation card illustration, painterly digital art, soft warm lighting, coral
 detailed, romantic, tasteful, vertical 3:4.”*
 
 ### 1) Ameen & Haldi — `event-haldi.jpg`
-> A sunny daytime Haldi celebration at a Goa beach resort: a couple seated on a
-> low marigold-decorated platform, turmeric bowls and brass thalis, marigold
-> garlands and toran strings overhead, palm trees and a glimpse of turquoise sea,
-> scattered marigold petals, bright cheerful golden-yellow and coral tones.
-> *(+ shared style suffix)*
+> A sunny daytime poolside Haldi at a Goa resort: a couple seated on a low
+> marigold-decorated platform beside a sparkling turquoise swimming pool,
+> turmeric bowls and brass thalis, marigold garlands and toran strings overhead,
+> palm trees around the pool deck, marigold petals floating on the water, bright
+> cheerful golden-yellow and coral tones. *(+ shared style suffix)*
 
 ### 2) Sangeet — `event-sangeet.jpg`
 > A glamorous evening Sangeet under a dusk sky: a stage with flowing drapes,

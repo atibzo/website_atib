@@ -68,7 +68,7 @@ The RSVP form POSTs to a **Google Apps Script Web App** that appends a row to a
 spreadsheet you own.
 
 1. Create a new Google Sheet. Add a header row:
-   `submittedAt | name | email | attending | guests | events | note`
+   `submittedAt | name | email | attending | guests | stay | events | note`
 2. In the Sheet: **Extensions ▸ Apps Script**. Replace the code with:
 
    ```javascript
@@ -81,6 +81,7 @@ spreadsheet you own.
        p.email || "",
        p.attending || "",
        p.guests || "",
+       p.stay || "",
        p.events || "",
        p.note || "",
      ]);
