@@ -68,7 +68,7 @@ The RSVP form POSTs to a **Google Apps Script Web App** that appends a row to a
 spreadsheet you own.
 
 1. Create a new Google Sheet. Add a header row:
-   `submittedAt | name | email | attending | guests | stay | events | note`
+   `submittedAt | name | email | attending | adults | children | childAges | stay | events | note`
 2. In the Sheet: **Extensions ▸ Apps Script**. Replace the code with:
 
    ```javascript
@@ -80,7 +80,9 @@ spreadsheet you own.
        p.name || "",
        p.email || "",
        p.attending || "",
-       p.guests || "",
+       p.adults || "",
+       p.children || "",
+       p.childAges || "",
        p.stay || "",
        p.events || "",
        p.note || "",
@@ -94,11 +96,16 @@ spreadsheet you own.
 3. **Deploy ▸ New deployment ▸ Web app.** Set *Execute as* **Me**, *Who has
    access* **Anyone**. Authorize when prompted. Copy the **Web app URL**
    (ends in `/exec`).
-4. Set the URL as an environment variable:
-   - Local: copy `.env.example` to `.env.local` and set
-     `NEXT_PUBLIC_RSVP_ENDPOINT=…/exec`
-   - Vercel: **Project ▸ Settings ▸ Environment Variables** →
-     `NEXT_PUBLIC_RSVP_ENDPOINT` (Production + Preview), then redeploy.
+4. Point the site at the URL — either way works (the `/exec` URL is a public
+   endpoint, not a secret):
+   - **Simplest:** paste it into `config/site.ts` → `rsvp.endpoint: "…/exec"`,
+     commit, push.
+   - Or set env var `NEXT_PUBLIC_RSVP_ENDPOINT` (`.env.local` for dev; Vercel
+     **Project ▸ Settings ▸ Environment Variables** for prod) — this overrides
+     the config value.
+
+Tip: do this on your **personal** Google account (log into personal Google
+first) so the RSVP sheet lives in your personal Drive.
 
 The form submits with `mode: "no-cors"`, so the browser can't read the
 response — a non-throwing request is treated as success. Test by submitting and

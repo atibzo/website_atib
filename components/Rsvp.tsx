@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site";
 import Reveal from "@/components/Reveal";
 
 const { rsvp, events } = siteConfig;
-const ENDPOINT = process.env.NEXT_PUBLIC_RSVP_ENDPOINT;
+const ENDPOINT = process.env.NEXT_PUBLIC_RSVP_ENDPOINT || rsvp.endpoint;
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -17,13 +17,21 @@ type Status = "idle" | "sending" | "sent" | "error";
 export default function Rsvp() {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
+  const [childCount, setChildCount] = useState(0);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
+    const ages = data
+      .getAll("childAge")
+      .map((v) => String(v).trim())
+      .filter(Boolean);
     const params = new URLSearchParams();
-    data.forEach((value, key) => params.append(key, String(value)));
+    data.forEach((value, key) => {
+      if (key !== "childAge") params.append(key, String(value));
+    });
+    params.set("childAges", ages.join(", "));
     params.set("submittedAt", new Date().toISOString());
 
     if (!ENDPOINT) {
@@ -44,6 +52,7 @@ export default function Rsvp() {
       });
       setStatus("sent");
       form.reset();
+      setChildCount(0);
     } catch {
       setStatus("error");
       setMessage("Something went wrong. Please try again or message us directly.");
@@ -105,17 +114,62 @@ export default function Rsvp() {
               </select>
             </Field>
 
-            <Field label="Number of guests" htmlFor="guests">
-              <input
-                id="guests"
-                name="guests"
-                type="number"
-                min={0}
-                max={20}
-                defaultValue={1}
-                className="rsvp-input"
-              />
-            </Field>
+            <div className="mt-5 grid grid-cols-2 gap-4">
+              <label htmlFor="adults" className="block">
+                <span className="mb-1.5 block font-sans text-xs uppercase tracking-[0.25em] text-ink-soft">
+                  Adults
+                </span>
+                <input
+                  id="adults"
+                  name="adults"
+                  type="number"
+                  min={0}
+                  max={20}
+                  defaultValue={1}
+                  className="rsvp-input"
+                />
+              </label>
+              <label htmlFor="children" className="block">
+                <span className="mb-1.5 block font-sans text-xs uppercase tracking-[0.25em] text-ink-soft">
+                  Children
+                </span>
+                <input
+                  id="children"
+                  name="children"
+                  type="number"
+                  min={0}
+                  max={20}
+                  value={childCount}
+                  onChange={(e) =>
+                    setChildCount(Math.max(0, Math.min(20, Number(e.target.value) || 0)))
+                  }
+                  className="rsvp-input"
+                />
+              </label>
+            </div>
+
+            {childCount > 0 && (
+              <fieldset className="mt-4">
+                <legend className="mb-2 font-sans text-xs uppercase tracking-[0.25em] text-ink-soft">
+                  Age of each child
+                </legend>
+                <div className="flex flex-wrap gap-3">
+                  {Array.from({ length: childCount }).map((_, i) => (
+                    <input
+                      key={i}
+                      name="childAge"
+                      type="number"
+                      min={0}
+                      max={18}
+                      required
+                      aria-label={`Child ${i + 1} age`}
+                      placeholder={`Child ${i + 1}`}
+                      className="rsvp-input w-24"
+                    />
+                  ))}
+                </div>
+              </fieldset>
+            )}
 
             <fieldset className="mt-5">
               <legend className="mb-2 font-sans text-xs uppercase tracking-[0.25em] text-ink-soft">

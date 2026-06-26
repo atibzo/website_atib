@@ -43,13 +43,13 @@ export const siteConfig = {
     groom: {
       firstName: "Atib",
       lastName: "Shaikh",
-      parents: "Son of Mr. Mohmadasif Shaikh & Mrs. Rafatnaim Shaikh",
+      parents: "Son of Mrs. Rafatnaim Shaikh & Mr. Mohmadasif Shaikh",
       grandparents: "",
     },
     bride: {
       firstName: "Sana",
       lastName: "Anjum",
-      parents: "Daughter of Mr. Kamal Anjum & Mrs. Shahin Naz",
+      parents: "Daughter of Mrs. Shahin Naz & Mr. Kamal Anjum",
       grandparents: "",
     },
   },
@@ -164,6 +164,9 @@ export const siteConfig = {
       "Your presence would make our celebration complete. Kindly let us know by the date below.",
     // TODO: set your RSVP deadline.
     deadline: "15th September, 2026",
+    // Paste your Google Apps Script Web App "/exec" URL here to record RSVPs.
+    // (Takes effect if NEXT_PUBLIC_RSVP_ENDPOINT env var is not set.)
+    endpoint: "",
   },
 
   // ── Background music ──────────────────────────────────────────────────────
