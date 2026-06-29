@@ -134,7 +134,7 @@ export const siteConfig = {
         dateNum: "02",
         month: "October",
         year: "2026",
-        time: "7:00 PM Onwards",
+        time: "7:00 PM Onwards Inshallah",
         venue: "Regenta Baywatch Resort, Goa",
         mapUrl: "https://maps.google.com/?q=Regenta+Baywatch+Resort+Goa",
         illustration: "sangeet",
